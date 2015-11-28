@@ -1,0 +1,171 @@
+<div class="home-page-container">
+    <header class="intro-header" style="margin-top: 10px; background-image: url('http://publications.ucsd.edu/image-library/images/campus/geisel.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="site-heading">
+                    <br></br>
+                        <h1>UCSD E-Connect</h1>
+                        <hr class="small">
+                        <span class="subheading">Connect with fellow students and build something great</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Content -->
+    <div class="container">
+
+       <!-- Page Header -->
+        <div class="row">
+            <div class="col-md-8">
+                <h3 class="page-header">Project Interest</h3>
+            </div>
+             <div class="col-md-4">
+                <h3 class="page-header">User Feed</h3>
+            </div>
+        </div>
+        <!-- /.row -->
+
+
+        <!-- Projects Row -->
+        <div class="row">
+            <div class="col-md-8">
+                <a href="#">
+                    <img class="img-responsive" src="http://2.bp.blogspot.com/-MmsT2VbIt1k/VM1YpnukPsI/AAAAAAAABv0/3prQjBCrUiA/s1600/316%2BNew%2BIsland%2Bfrom%2B450%2BMiles%2Bup.jpg" alt="">
+                </a>
+                <h3>
+                    <a href="#">Experience The Commonwealth of New Island</a>
+                </h3>
+                <p>The New Island Guidebook is ready to print! Be one of the first to explore this 12,000 square mile work of art. It's a BIG island.
+                    It is an "as-if" place, somewhere between Middle Earth and Wonderland, but not too far from the real world. Set in the Indian Ocean 
+                    near Australia.</p>
+            </div>
+            <div class="col-md-4 ">
+                <a href="#">
+                    <img class="img-responsive" src="http://designvast.com/wp-content/uploads/feedek-jquery-rss-feed-plugin.png" alt="">
+                </a>
+                
+            </div>
+        </div>
+        <!-- /.row -->
+
+
+
+
+
+        <!-- Title -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header">Featured Projects</h3>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <!-- Page Features -->
+        <div class="row text-center">
+
+            <div class="col-md-4 col-sm-6">
+                <div class="thumbnail">
+                    <img src="https://ksr-ugc.imgix.net/projects/1705439/photo-original.jpg?v=1430480526&w=338&h=250&fit=crop&auto=format&q=92&s=52bd69d925c0b5870071920e3b533b3e" alt="">
+                    <div class="caption">
+                        <h3>The Bessard</h3>
+                        <p>We made "The Reward". We made "The First Hero". Now we're going for more episodes! Please help us bring the world of Alethrion to life!</p>                       
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="thumbnail">
+                    <img src="https://ksr-ugc.imgix.net/projects/1805765/photo-original.jpg?v=1431009885&w=338&h=250&fit=crop&auto=format&q=92&s=c6f47b4efe167caf2ea4ed2f86da28b5" alt="">
+                    <div class="caption">
+                        <h3>The World's First Nine Dollar Computer</h3>
+                        <p>Built for work, play, and everything in between! \(•◡•)/</p>       
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6 hero-feature">
+                <div class="thumbnail">
+                    <img src="https://ksr-ugc.imgix.net/projects/1824079/photo-original.jpg?v=1430283150&w=338&h=250&fit=crop&auto=format&q=92&s=1894480064c0c4d72a9b212fda9c5593" alt="">
+                    <div class="caption">
+                        <h3>Electronic Health Record Software</h3>
+                        <p>LowEHR is a electronic health records and medical practice management application that can run on Windows.</p>   
+                    </div>
+                </div>
+            </div>
+       
+
+        </div>
+        <!-- /.row -->
+
+        <hr>
+
+        
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="post-container table-responsive">
+        <table class="table table-hover">
+            <tr>
+                <th><a href="" ng-click="reverse=!reverse; order('upvotes', reverse)">Votes</a>
+                <th><a href="" ng-click="reverse=!reverse; order('title', reverse)">Title</a></th>
+                <th><a href="" ng-click="reverse=!reverse; order('comments.length',reverse)">Comments</a></th>
+                <th><a href="" ng-click="reverse=!reverse; order('comments.author',reverse)">Author</a></th>
+            </tr>
+            <tr ng-repeat="post in posts" ng-mouseover="deleteBtn = true" ng-mouseleave="deleteBtn = false">
+                <td>
+                    {{post.upvotes}}
+                    <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(post)"></span>
+                </td>
+                <td>
+                    <a ng-show="post.link" href="{{ post.link }}">
+                        {{post.title}}
+                    </a>
+                    <span ng-hide="post.link">
+                        {{post.title}}
+                    </span>
+                </td>
+                <td>
+                    <span>
+                        {{post.comments.length}}
+                        <a href="#/posts/{{post._id}}">Comment(s)</a>
+                    </span>
+                </td>
+                <td>
+                    <span ng-show="post.author">
+                        <a>{{post.author}}</a> |
+                    </span>
+                </td>
+                <td>
+                    <div class="delete-btn">
+                        <a href="" class="glyphicon glyphicon-remove" ng-show="deleteBtn" ng-click="removePost(post)"></a>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-6">
+        <form class="new-post-form form-group" ng-submit="addPost()" ng-show="isLoggedIn()">
+            <input class="form-control" type="text" placeholder="Title" ng-model="title"></input><br>
+            <input class="form-control" type="text" placeholder="Link" ng-model="link"></input>
+            <button class="btn btn-default" type="submit">Post</button>
+        </form>
+    </div>
+    <div ng-hide="isLoggedIn()">
+        <h3>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can add a post.</h3>
+    </div>
+    
+</div>

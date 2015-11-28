@@ -1,0 +1,62 @@
+
+<div class="register-container"> 
+    <div class="page-header">
+        <h1>Register</h1>
+    </div>
+
+    <div ng-show="error" class="alert alert-danger row">
+        <span>{{ error.message }}</span>
+    </div>
+
+    <form ng-submit="register()" ng-app="fileUpload" class="col-md-6">
+        <div class="form-group">
+            <label for="user_name">Username</label>
+            <input type="text" id="user_name" class="form-control" placeholder="Username" ng-model="user.username"></input>
+        </div>
+        <div class="form-group">
+            <label for="user_password">Password</label>
+            <input type="password" id="user_password" class="form-control" placeholder="Password" ng-model="user.password"></input>
+        </div>
+        <div class="form-group">
+            <label for="user_first_name">First Name</label>
+            <input type="text" id="user_first_name"  class="form-control" placeholder="First Name" ng-model="user.firstName"></input>
+        </div>
+        <div class="form-group">
+            <label for="user_last_name">Last Name</label>
+            <input type="text" id="user_last_name"  class="form-control" placeholder="Last Name" ng-model="user.lastName"></input>
+        </div>
+        <div class="form-group">
+            <label for="user_email">Email address</label>
+            <input type="text" id="user_email"  class="form-control" placeholder="Email" ng-model="user.email"></input>
+        </div>
+
+        <div class="form-group">
+            <label for="user_picture">Profile Picture</label>
+            <input type="file" name="image" ng-file-select="onUploadSelect($files)" ng-model="user.picture"/>
+        </div>
+
+
+
+        <div class="form-group">
+            <label for="user_desc">Short Description</label>
+            <textarea maxlength="140" id="user_desc" type="text" class="form-control" ng-model="user.description"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="user_experience">Experience</label>
+            <textarea id="user_experience" type="text" class="form-control" ng-model="user.experience"></textarea>
+        </div>
+         <div class="form-group">
+            <label for="user_skills">Skills</label>
+            <textarea id="user_skills" type="text" class="form-control" ng-model="user.skills"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="user_interest">Interest</label>
+            <textarea id="user_interest" type="text" class="form-control" ng-model="user.interest"></textarea>
+        </div>
+
+
+
+
+        <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+</div>

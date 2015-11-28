@@ -1,0 +1,233 @@
+/* Global */
+
+.main-container {
+	padding: 20px;
+}
+
+
+
+/* Home page */
+
+.home-page-container {
+
+}
+
+
+.intro-header {
+  background-color: #808080;
+  background: no-repeat center center;
+  background-attachment: scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  -o-background-size: cover;
+  margin-bottom: 50px;
+}
+.intro-header .site-heading,
+.intro-header .post-heading,
+.intro-header .page-heading {
+  padding: 100px 0 50px;
+  color: white;
+}
+
+
+
+/* Login Page */
+
+
+.login-container {
+	padding: 0px 30px;
+}
+
+.login-container form input {
+	width: 500px;
+}
+
+
+/* Register Page */
+
+
+.register-container {
+	padding: 0px 30px;
+}
+
+.register-container form input {
+	width: 300px;
+}
+
+.register-container form textarea {
+}
+
+
+
+
+/* Profiles Page */
+.profile-container {
+}
+
+.profile-content {
+	height: 300px;
+}
+
+.profile-userpic img {
+  float: none;
+  margin: 0 auto;
+  width: 150px;
+  height: 150px;
+}
+
+.profile-text {
+	margin-left: auto;
+    margin-right: auto;
+}
+
+.profile-name {
+	text-align: center;
+	vertical-align: middle;
+}
+
+.profile-desc {
+	width: 50px;
+	overflow: hidden;
+}
+
+
+/* Profile sidebar */
+.profile-sidebar {
+  padding: 20px 0 10px 0;
+  background: #fff;
+}
+
+.profile-userpic img {
+  float: none;
+  margin: 0 auto;
+  width: 50%;
+  height: 50%;
+  -webkit-border-radius: 50% !important;
+  -moz-border-radius: 50% !important;
+  border-radius: 50% !important;
+}
+
+.profile-usertitle {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.profile-usertitle-name {
+  color: #5a7391;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 7px;
+}
+
+.profile-usertitle-job {
+  text-transform: uppercase;
+  color: #5b9bd1;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.profile-userbuttons {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.profile-userbuttons .btn {
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 6px 15px;
+  margin-right: 5px;
+}
+
+.profile-userbuttons .btn:last-child {
+  margin-right: 0px;
+}
+    
+.profile-usermenu {
+  margin-top: 30px;
+}
+
+.profile-usermenu ul li {
+  border-bottom: 1px solid #f0f4f7;
+}
+
+.profile-usermenu ul li:last-child {
+  border-bottom: none;
+}
+
+.profile-usermenu ul li a {
+  color: #93a3b5;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.profile-usermenu ul li a i {
+  margin-right: 8px;
+  font-size: 14px;
+}
+
+.profile-usermenu ul li a:hover {
+  background-color: #fafcfd;
+  color: #5b9bd1;
+}
+
+.profile-usermenu ul li.active {
+  border-bottom: none;
+}
+
+.profile-usermenu ul li.active a {
+  color: #5b9bd1;
+  background-color: #f6f9fb;
+  border-left: 2px solid #5b9bd1;
+  margin-left: -2px;
+}
+
+/* Profile Content */
+.profile-content {
+  padding: 20px;
+  background: #fff;
+  min-height: 460px;
+  min-width: 80%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.delete-btn {
+	position: absolute;
+}
+
+.post-content {
+  padding: 2px;
+}
+.new-post-form {
+  margin-top: 20px;
+}
+.new-post-form input {
+  display: block;
+}
+.new-post-form button {
+  margin-top: 20px;
+}
+
+post-container {
+	width: 100%;
+}
