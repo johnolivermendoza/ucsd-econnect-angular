@@ -12,11 +12,13 @@ var UserSchema = new mongoose.Schema({
 	firstName: String,
 	lastName: String,
 	email: String,
-	description: String,
+	shortDescription: String,
+	job: String,
+	aboutMe: String,
 	experience: String,
 	skills: String,
-	interest: String,
-	projects: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Projects' }],
+	interests: String,
+	projects: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Project' }],
 	profilePicture: { data: Buffer, contentType: String }
 
 });

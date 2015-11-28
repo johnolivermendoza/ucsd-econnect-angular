@@ -65,40 +65,47 @@
 .profile-container {
 }
 
-.profile-content {
+
+.profiles-container .profile-content {
 	height: 300px;
 }
 
-.profile-userpic img {
+.profiles-container .profile-userpic img {
   float: none;
   margin: 0 auto;
   width: 150px;
   height: 150px;
 }
 
-.profile-text {
+
+.profiles-container .profile-text {
 	margin-left: auto;
     margin-right: auto;
 }
 
-.profile-name {
+
+.profiles-container .profile-name {
 	text-align: center;
 	vertical-align: middle;
 }
 
-.profile-desc {
+
+.profiles-container .profile-desc {
 	width: 50px;
 	overflow: hidden;
 }
 
 
 /* Profile sidebar */
-.profile-sidebar {
+.my-profile-container .profile-sidebar {
   padding: 20px 0 10px 0;
   background: #fff;
 }
+.my-profile-container .my-profile-sidebar img {
+	margin: 0 auto;
+}
 
-.profile-userpic img {
+.my-profile-container .profile-userpic img {
   float: none;
   margin: 0 auto;
   width: 50%;
@@ -108,19 +115,19 @@
   border-radius: 50% !important;
 }
 
-.profile-usertitle {
+.my-profile-container .profile-usertitle {
   text-align: center;
   margin-top: 20px;
 }
 
-.profile-usertitle-name {
+.my-profile-container .profile-usertitle-name {
   color: #5a7391;
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 7px;
 }
 
-.profile-usertitle-job {
+.my-profile-container .profile-usertitle-job {
   text-transform: uppercase;
   color: #5b9bd1;
   font-size: 12px;
@@ -128,12 +135,12 @@
   margin-bottom: 15px;
 }
 
-.profile-userbuttons {
+.my-profile-container .profile-userbuttons {
   text-align: center;
   margin-top: 10px;
 }
 
-.profile-userbuttons .btn {
+.my-profile-container .profile-userbuttons .btn {
   text-transform: uppercase;
   font-size: 11px;
   font-weight: 600;
@@ -141,43 +148,43 @@
   margin-right: 5px;
 }
 
-.profile-userbuttons .btn:last-child {
+.my-profile-container .profile-userbuttons .btn:last-child {
   margin-right: 0px;
 }
     
-.profile-usermenu {
+.my-profile-container .profile-usermenu {
   margin-top: 30px;
 }
 
-.profile-usermenu ul li {
+.my-profile-container .profile-usermenu ul li {
   border-bottom: 1px solid #f0f4f7;
 }
 
-.profile-usermenu ul li:last-child {
+.my-profile-container .profile-usermenu ul li:last-child {
   border-bottom: none;
 }
 
-.profile-usermenu ul li a {
+.my-profile-container .profile-usermenu ul li a {
   color: #93a3b5;
   font-size: 14px;
   font-weight: 400;
 }
 
-.profile-usermenu ul li a i {
+.my-profile-container .profile-usermenu ul li a i {
   margin-right: 8px;
   font-size: 14px;
 }
 
-.profile-usermenu ul li a:hover {
+.my-profile-container .profile-usermenu ul li a:hover {
   background-color: #fafcfd;
   color: #5b9bd1;
 }
 
-.profile-usermenu ul li.active {
+.my-profile-container .profile-usermenu ul li.active {
   border-bottom: none;
 }
 
-.profile-usermenu ul li.active a {
+.my-profile-container .profile-usermenu ul li.active a {
   color: #5b9bd1;
   background-color: #f6f9fb;
   border-left: 2px solid #5b9bd1;
@@ -185,7 +192,7 @@
 }
 
 /* Profile Content */
-.profile-content {
+.my-profile-container .profile-content {
   padding: 20px;
   background: #fff;
   min-height: 460px;
@@ -194,6 +201,19 @@
 
 
 
+
+/* Add new project */
+
+.add-project-container {
+	padding: 0px 30px;
+}
+
+.add-project-container form input {
+	width: 300px;
+}
+
+.add-project-container form textarea {
+}
 
 
 

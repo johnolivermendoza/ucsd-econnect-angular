@@ -36,22 +36,29 @@
         </div>
 
 
-
+        <div class="form-group">
+            <label for="user_job">Current Job</label>
+            <input type="text" id="user_job"  class="form-control" ng-model="user.job"></input>
+        </div>
         <div class="form-group">
             <label for="user_desc">Short Description</label>
-            <textarea maxlength="140" id="user_desc" type="text" class="form-control" ng-model="user.description"></textarea>
+            <textarea maxlength="160" id="user_desc" type="text" class="form-control" ng-model="user.shortDescription"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="user_about_me">About Yourself</label>
+            <textarea rows="4" id="user_about_me" type="text" class="form-control" ng-model="user.aboutMe"></textarea>
         </div>
         <div class="form-group">
             <label for="user_experience">Experience</label>
-            <textarea id="user_experience" type="text" class="form-control" ng-model="user.experience"></textarea>
+            <textarea rows="4" id="user_experience" type="text" class="form-control" ng-model="user.experience"></textarea>
         </div>
          <div class="form-group">
             <label for="user_skills">Skills</label>
-            <textarea id="user_skills" type="text" class="form-control" ng-model="user.skills"></textarea>
+            <textarea rows="4" id="user_skills" type="text" class="form-control" ng-model="user.skills"></textarea>
         </div>
         <div class="form-group">
             <label for="user_interest">Interest</label>
-            <textarea id="user_interest" type="text" class="form-control" ng-model="user.interest"></textarea>
+            <textarea rows="4" id="user_interest" type="text" class="form-control" ng-model="user.interest"></textarea>
         </div>
 
 

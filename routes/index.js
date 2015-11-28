@@ -12,7 +12,7 @@ var mongoose = require('mongoose');
 
 var Post = mongoose.model('Post');
 var Comment = mongoose.model('Comment');
-
+var Project = mongoose.model('Project');
 
 
 // User Auth
@@ -32,8 +32,8 @@ var auth = jwt({secret: 'SECRET', userProperty: 'payload'});
 router.post('/register', function(req, res, next){
 	console.log("CREATING A NEW USER: ");
 	console.log(req.body);
-	if(!req.body.username || !req.body.password || !req.body.email || !req.body.description
-	|| !req.body.experience || !req.body.skills || !req.body.interest ){
+	if(!req.body.username || !req.body.password || !req.body.email || !req.body.shortDescription
+	|| !req.body.aboutMe || !req.body.experience || !req.body.skills || !req.body.interest ){
 		return res.status(400).json({message: 'Please fill out all fields'});
 	}
 	
@@ -45,10 +45,12 @@ router.post('/register', function(req, res, next){
 	user.firstName = req.body.firstName;
 	user.lastName = req.body.lastName;
 	user.email = req.body.email;
-	user.description = req.body.description;
+	user.job = req.body.job;
+	user.shortDescription = req.body.shortDescription;
+	user.aboutMe = req.body.shortDescription;
 	user.experience = req.body.experience;
 	user.skills = req.body.skills;
-	user.interest = req.body.skills;
+	user.interests = req.body.interests;
 	
 
 	user.save(function (err){
@@ -85,7 +87,7 @@ router.post('/login', function(req, res, next){
 
 
 
-
+/*
 // TODO Needs work
 router.get('/profileimage',function(req, res){
     fs.readFile('./public/images/' + reg.params.file, function(err, image){
@@ -100,7 +102,7 @@ router.get('/profileimage',function(req, res){
         base64Image
         );
     });
-});
+});*/
 
 
 
@@ -121,9 +123,10 @@ router.param('profile', function(req, res, next, id) {
 	console.log('**** Loading existing profile');
 	var query = User.findById(id);
 
+
 	query.exec(function (err, profile){
 		if (err) { return next(err); }
-		if (!post) { return next(new Error('can\'t find user profile')); }
+		if (!profile) { return next(new Error('can\'t find user profile')); }
 
 		req.profile = profile;
 		return next();
@@ -132,12 +135,76 @@ router.param('profile', function(req, res, next, id) {
 
 // Route to get a specific profile
 router.get('/profiles/:profile', function(req, res, next) {
-	req.post.populate('comments', function(err, profile) {
+
+	// Populate the profile object with its projects
+	req.profile.populate('projects', function(err, profile) {
 		if (err) { return next(err); }
 
 		res.json(profile);
-	})
+	})	
 });
+
+
+// Preloads an existing comment
+router.param('project', function(req, res, next, id) {
+	var query = Project.findById(id);
+
+	query.exec(function (err, project){
+		if (err) { return next(err); }
+		if (!project) { return next(new Error('can\'t find project')); }
+
+		req.project = project;
+		return next();
+	});
+});
+
+
+// Gets all projects for that specific post
+router.get('/profiles/:profile/projects', function(req, res, next) {
+	var query = Project.find({post: req.post.id});
+	query.exec(function(err, projects) {
+		if(err){ return next(err); }
+
+		res.json(projects);
+	});
+});
+
+
+// Creates a new comment
+router.post('/profiles/:profile/addproject', auth, function(req, res, next) {
+	var project = new Project();
+
+	// Adds the current user to the list of project users	
+	project.users = {};
+	project.users.push(req.profile);
+
+	project.name = req.body.name;
+	project.description = req.body.description;
+	project.skills = req.body.skills;
+	project.creationDate = req.body.creationDate;
+	project.launchDate = req.body.launchDate;
+	project.createdBy = req.profile;
+
+	project.users.push(req.profile);
+
+	project.save(function(err, project) {
+		if(err) { return next(err); }
+
+		res.json(project);
+
+	})
+})
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -187,6 +254,8 @@ router.param('post', function(req, res, next, id) {
 
 // Route to get a specific post
 router.get('/posts/:post', function(req, res, next) {
+
+	// Populate comments
 	req.post.populate('comments', function(err, post) {
 		if (err) { return next(err); }
 

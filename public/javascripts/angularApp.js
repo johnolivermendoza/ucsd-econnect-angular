@@ -48,16 +48,39 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 			
 		})
 		// Show a specific profile
-		.state('profile', {
+		.state('myprofile', {
 			url: '/profiles/{id}',
 			templateUrl: '/myProfile.html',
-			controller: 'ProfileCtrl',
+			controller: 'MyProfileCtrl',
 			resolve: {
 				profile: ['$stateParams', 'profileService', function($stateParams, profileService) {
-					return profiles.get($stateParams.id);
+					return profileService.get($stateParams.id);
 				}]
 			}
-			
+		})
+
+		// Show a specific profile
+		.state('projects', {
+			url: '/projects',
+			templateUrl: '/projects.html',
+			controller: 'ProjectCtrl',
+			resolve: {
+				projectsPromise: ['projectService', function(projectService) {
+					return projectService.getAll();
+				}]
+			}
+		})
+
+		// Show a specific profile
+		.state('addproject', {
+			url: '/profiles/{id}/addproject',
+			templateUrl: '/addProject.html',
+			controller: 'AddProjectCtrl',
+			resolve: {
+				profile: ['$stateParams', 'profileService', function($stateParams, profileService) {
+					return profileService.get($stateParams.id);
+				}]
+			}
 		})
 
 
@@ -226,9 +249,55 @@ app.controller('ProfileCtrl', ['$scope', 'profileService', 'authService', functi
 }]);
 
 
-app.factory('profileService', ['$http', '$window', function($http, $window) {
-	var profileService = {};
+app.controller('MyProfileCtrl', ['$scope', 'profileService', 'profile', function($scope, profileService, profile) {
+	$scope.profile = profile;
+	$scope.activeTab = 1;
 
+	$scope.setProfileTab = function(number) {
+		$scope.activeTab = number;
+	};
+
+	$scope.checkProfileTab = function(id) {
+		return $scope.activeTab === id;
+	};
+
+
+	/*
+	$scope.openModal = function(){
+		$modal.open({
+			templateUrl: '/addProject.html',
+		resolve: {
+			newPath: function(){
+			return 'home'
+			},
+			oldPath: function(){
+				return 'home.modal'
+			}
+		},
+		controller: 'ProjectController'
+		});
+	}; */
+
+
+
+	// TODO
+	/*
+	$scope.editProfile = function(){
+		if($scope.body === '') { return; }
+
+		posts.addComment(post._id, {
+			body: $scope.body,
+			author: 'user',
+		}).success(function(comment) {
+			$scope.post.comments.push(comment);
+		});
+		$scope.body = '';
+	};*/
+
+}]);
+
+
+app.factory('profileService', ['$http', 'authService', function($http, authService) {
 	var profileService = {
 		// initialize the posts as empty
 		profiles: []
@@ -247,39 +316,125 @@ app.factory('profileService', ['$http', '$window', function($http, $window) {
 		});
 	};
 
+	/*
+
 	profileService.getImage = function(image) {
 		console.log('**** GETTING IMAGE');
 		return $http.get('/profileimage/' + image).then(function(result){
 			return result;
 		});
-	}
-
-
-	/*
-	o.inviteProfile = function(post) {
-		return $http.put('/posts/' + post._id + '/upvote', null, {
-			headers: {Authorization: 'Bearer '+authService.getToken()}
-		}).success(function(data){
-			post.upvotes += 1;
-		});
 	};
-
-	o.addComment = function(id, comment) {
-		return $http.post('/posts/' + id + '/comments', comment, {
-			headers: {Authorization: 'Bearer '+authService.getToken()}
-		});
-	};
-
-	o.upvoteComment = function(post, comment) {
-		return $http.put('/posts/' + post._id + '/comments/'+ comment._id + '/upvote', null, {
-			headers: {Authorization: 'Bearer '+authService.getToken()}
-		}).success(function(data){
-			comment.upvotes += 1;
-		});
-	}; */
+*/
 
 	return profileService;
 }]);
+
+
+app.controller('ProjectCtrl', ['$scope', 'projectService', 'authService', function($scope, projectService, authService) {
+	$scope.projects = projectService.projects;
+	$scope.isLoggedIn = authService.isLoggedIn;
+
+
+	/*
+	$scope.addProject = function(){
+		if($scope.body === '') { return; }
+
+		prof.addProject(profile._id, {
+			body: $scope.body,
+			author: 'user',
+		}).success(function(comment) {
+			$scope.post.comments.push(comment);
+		});
+		$scope.body = '';
+	};*/
+
+
+	
+
+}]);
+
+
+
+
+
+app.controller('AddProjectCtrl', ['$scope', 'projectService', 'authService', 'profile', function($scope, projectService, authService, profile) {
+	$scope.profile = profile;
+	$scope.isLoggedIn = authService.isLoggedIn;
+
+
+console.log("**** AddProject stuff: ");
+console.log(profile);
+	$scope.addProject = function(){
+		projectService.addProject($scope.profile._id).error(function(error){
+			$scope.error = error;
+		}).then(function(){
+			console.log("ADDED NEW PROJECT!");
+			$state.go('home');
+		});
+	};
+
+	/*
+	$scope.addProject = function(){
+		if($scope.body === '') { return; }
+
+		prof.addProject(profile._id, {
+			body: $scope.body,
+			author: 'user',
+		}).success(function(comment) {
+			$scope.post.comments.push(comment);
+		});
+		$scope.body = '';
+	};*/
+
+
+	
+
+}]);
+
+app.factory('projectService', ['$http', 'authService', function($http, authService) {
+	var projectService = {
+		// initialize the posts as empty
+		projects: []
+	};
+
+	projectService.getAll = function() {
+		return $http.get('/profiles').success(function(data) {
+			angular.copy(data, projectService.projects);
+
+		});
+	};
+
+	projectService.get = function(id) {
+		return $http.get('/profiles/' + id).then(function(res) {
+			return res.data;
+		});
+	};
+
+
+	projectService.addProject = function(id) {
+		return $http.post('/profiles/' + id + '/addproject', {
+			headers: {Authorization: 'Bearer '+authService.getToken()}
+		});
+	};
+
+	return projectService;
+}]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -292,28 +447,9 @@ app.factory('profileService', ['$http', '$window', function($http, $window) {
 app.controller('NavCtrl', ['$scope','authService', function($scope, authService) {
 	$scope.isLoggedIn = authService.isLoggedIn;
 	$scope.currentUser = authService.currentUser;
+	$scope.currentUserId = authService.currentUserId;
 	$scope.logOut = authService.logOut;
 }]);  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -347,8 +483,15 @@ app.factory('authService', ['$http', '$window', function($http, $window) {
 		if(authService.isLoggedIn()){
 			var token = authService.getToken();
 			var payload = JSON.parse($window.atob(token.split('.')[1]));
-
 			return payload.username;
+		}
+	};
+
+	authService.currentUserId = function(){
+		if(authService.isLoggedIn()){
+			var token = authService.getToken();
+			var payload = JSON.parse($window.atob(token.split('.')[1]));
+			return payload._id;
 		}
 	};
 

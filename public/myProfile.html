@@ -1,18 +1,18 @@
-<div class="profile-container">
+<div class="my-profile-container">
     <div class="row profile">
 		<div class="col-md-3">
 			<div class="profile-sidebar">
 				<!-- SIDEBAR USERPIC -->
-				<img class="img-responsive img-circle" ng-src="http://gurucul.com/wp-content/uploads/2015/01/default-user-icon-profile.png"></img>
+				<img class="img-responsive img-circle" style="margin: 0 auto;" ng-src="http://gurucul.com/wp-content/uploads/2015/01/default-user-icon-profile.png"></img>
 
 				<!-- END SIDEBAR USERPIC -->
 				<!-- SIDEBAR USER TITLE -->
 				<div class="profile-usertitle">
 					<div class="profile-usertitle-name">
-						{{ profile.firstName}}{{profile.lastName}}
+						{{ profile.firstName}} {{profile.lastName}}
 					</div>
 					<div class="profile-usertitle-job">
-						Student
+						{{profile.job}}
 					</div>
 				</div>
 					<!-- END SIDEBAR USER TITLE -->
@@ -20,25 +20,24 @@
 				
 				<div class="profile-userbuttons">
 					<button id="openModal" name="econnect_invite" class="btn btn-success btn-sm">Invite</button>
-
 				</div>
 
 				<!-- END SIDEBAR BUTTONS -->
 				<!-- SIDEBAR MENU -->
 				<div class="profile-usermenu">
 					<ul class="nav tabs-menu">
-						<li class="active">
-							<a href="#profile-tab">
+						<li ng-class="{'active': checkProfileTab(1)}">
+							<a href="" ng-click="setProfileTab(1)">
 							<i class="glyphicon "></i>
 								Profile </a>
 						</li>
-						<li>
-							<a href="#projects-tab">
+						<li ng-class="{'active': checkProfileTab(2)}">
+							<a href="" ng-click="setProfileTab(2)">
 							<i class="glyphicon "></i>
 								My Projects </a>
 						</li>
-						<li>
-							<a href="#contact-tab">
+						<li ng-class="{'active': checkProfileTab(3)}">
+							<a href="" ng-click="setProfileTab(3)">
 							<i class="glyphicon "></i>
 								Contact </a>
 						</li>
@@ -48,25 +47,42 @@
 			</div>
 		</div>
 		<div class="col-md-9 tab">
-            <div id="profile-tab" class="tab-content">
+            <div id="profile-tab" class="tab-content" ng-show="checkProfileTab(1)">
 			    <table class="table table-user-information">
 			   		<tbody>
-                    	Profile Stuff
-                    	{{profile.description}}
+			   			<tr>
+			   				<td>About Me</td>
+                    		<td>{{profile.aboutMe}}</td>
+                    	</tr>
+                    	<tr>
+			   				<td>Experience</td>
+                    		<td>{{profile.experience}}</td>
+                    	</tr>
+                    	<tr>
+			   				<td>Skills</td>
+                    		<td>{{profile.skills}}</td>
+                    	</tr>
+                    	<tr>
+			   				<td>Interests</td>
+                    		<td>{{profile.interests}}</td>
+                    	</tr>
                     </tbody>
                 </table>
             </div>
-            <div id="projects-tab" class="tab-content">
+            <div id="projects-tab" class="tab-content" ng-show="checkProfileTab(2)">
 			   <table class="table table-user-information">
                     <tbody>
                     	Projects Stuff
                     </tbody>
                 </table>
             </div>
-            <div id="contact-tab" class="tab-content">
+            <div id="contact-tab" class="tab-content" ng-show="checkProfileTab(3)">
 			   <table class="table table-user-information">
                     <tbody>
-                    	Contact Stuff
+                    	<tr>
+			   				<td>Email Address</td>
+                    		<td>{{profile.email}}</td>
+                    	</tr>
                     </tbody>
                 </table>
             </div>
