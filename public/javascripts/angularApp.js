@@ -357,15 +357,18 @@ app.controller('ProjectCtrl', ['$scope', 'projectService', 'authService', functi
 
 
 
-app.controller('AddProjectCtrl', ['$scope', 'projectService', 'authService', 'profile', function($scope, projectService, authService, profile) {
+app.controller('AddProjectCtrl', ['$scope', 'projectService', 'profile', '$state', function($scope, projectService, profile, $state) {
 	$scope.profile = profile;
-	$scope.isLoggedIn = authService.isLoggedIn;
+	$scope.project = {};
+	//$scope.isLoggedIn = authService.isLoggedIn;
 
 
-console.log("**** AddProject stuff: ");
+
 console.log(profile);
+
 	$scope.addProject = function(){
-		projectService.addProject($scope.profile._id).error(function(error){
+		console.log("**** AddProject stuff: ");
+		projectService.addProject($scope.profile._id, $scope.project).error(function(error){
 			$scope.error = error;
 		}).then(function(){
 			console.log("ADDED NEW PROJECT!");
@@ -398,7 +401,8 @@ app.factory('projectService', ['$http', 'authService', function($http, authServi
 	};
 
 	projectService.getAll = function() {
-		return $http.get('/profiles').success(function(data) {
+		return $http.get('/projects').success(function(data) {
+			console.log('**** GET ALL PROJECTS: ' + data);
 			angular.copy(data, projectService.projects);
 
 		});
@@ -411,9 +415,15 @@ app.factory('projectService', ['$http', 'authService', function($http, authServi
 	};
 
 
-	projectService.addProject = function(id) {
-		return $http.post('/profiles/' + id + '/addproject', {
-			headers: {Authorization: 'Bearer '+authService.getToken()}
+	projectService.addProject = function(id, project) {
+		//return $http.post('/profiles/' + id + '/addproject', {
+		//	headers: {Authorization: 'Bearer '+authService.getToken()}
+		//});
+
+
+		return $http.post('/profiles/' + id + '/addproject', project).success(function(data){
+			console.log("CREATED A NEW PROJECT: " + data);
+ 
 		});
 	};
 

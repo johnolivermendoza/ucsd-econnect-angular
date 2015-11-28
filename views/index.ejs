@@ -19,7 +19,7 @@
                 <li><a href="/#/team">Teams</a></li>
                 <li><a href="/#/projects">Projects</a></li>
                 <li ng-show="isLoggedIn()"><a href="/#/profiles/{{ currentUserId() }}/addproject">Create New Project</a></li>
-                <li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
+                <li ng-show="isLoggedIn()"><a href="/" ng-click="logOut()">Log Out</a></li>
 
 
                 <li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>

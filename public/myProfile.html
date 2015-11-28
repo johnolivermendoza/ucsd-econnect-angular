@@ -70,11 +70,17 @@
                 </table>
             </div>
             <div id="projects-tab" class="tab-content" ng-show="checkProfileTab(2)">
-			   <table class="table table-user-information">
-                    <tbody>
-                    	Projects Stuff
-                    </tbody>
-                </table>
+            	<div class="project-content" ng-repeat="project in profile.projects">
+			        <div class="project-image">
+			            <!-- <img ng-src="{{getProfileImage('user.jpeg')}}"></img> -->
+			            <img class="img-responsive" ng-src="https://ksr-ugc.imgix.net/projects/1805765/photo-original.jpg?v=1431009885&w=338&h=250&fit=crop&auto=format&q=92&s=c6f47b4efe167caf2ea4ed2f86da28b5"></img>
+			        </div>
+			        <div class="project-name">
+			            <h3 class="project-name"><a href="#/projects/{{project._id}}">{{project.name}}</a></h3>
+			            <span class="project-desc">{{project.description | limitTo: 300 }}{{project.description > 300 ? '...' : ''}}</span>
+			            {{project._id}}
+			        </div>
+			    </div>
             </div>
             <div id="contact-tab" class="tab-content" ng-show="checkProfileTab(3)">
 			   <table class="table table-user-information">

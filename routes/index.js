@@ -159,6 +159,17 @@ router.param('project', function(req, res, next, id) {
 });
 
 
+// Gets all global projects
+router.get('/projects', function(req, res, next) {
+	Project.find(function(err, projects){
+		console.log("**** GETTING ALL PROJECTS");
+		if(err){ return next(err); }
+
+		res.json(projects);
+	});
+});
+
+
 // Gets all projects for that specific post
 router.get('/profiles/:profile/projects', function(req, res, next) {
 	var query = Project.find({post: req.post.id});
@@ -170,13 +181,20 @@ router.get('/profiles/:profile/projects', function(req, res, next) {
 });
 
 
-// Creates a new comment
-router.post('/profiles/:profile/addproject', auth, function(req, res, next) {
-	var project = new Project();
+// Creates a new project
+router.post('/profiles/:profile/addproject', function(req, res, next) {
+	console.log('**** CREATING A NEW PROJECT: ');
+	console.log(req.body);
+	if(!req.body.name || !req.body.description || !req.body.skills){
+		return res.status(400).json({message: 'Please fill out all fields'});
+	}
 
+
+	var project = new Project();
 	// Adds the current user to the list of project users	
-	project.users = {};
-	project.users.push(req.profile);
+	//project.users = {};
+	//console.log('**** Adding current user to project users field: ' + req.profile);
+	//project.users.push(req.profile);
 
 	project.name = req.body.name;
 	project.description = req.body.description;
@@ -185,15 +203,21 @@ router.post('/profiles/:profile/addproject', auth, function(req, res, next) {
 	project.launchDate = req.body.launchDate;
 	project.createdBy = req.profile;
 
-	project.users.push(req.profile);
-
 	project.save(function(err, project) {
+		console.log('**** Saving the project: ' + err);
 		if(err) { return next(err); }
 
-		res.json(project);
+		req.profile.projects.push(project);
 
+		// Saves the post and attach a reference from the post object
+		req.profile.save(function(err, profile) {
+			if(err) { return next(err); }
+
+			res.json(project);
+		})
 	})
-})
+});
+
 
 
 
