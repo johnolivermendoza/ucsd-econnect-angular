@@ -66,106 +66,18 @@
         <!-- Page Features -->
         <div class="row text-center">
 
-            <div class="col-md-4 col-sm-6">
-                <div class="thumbnail">
-                    <img src="https://ksr-ugc.imgix.net/projects/1705439/photo-original.jpg?v=1430480526&w=338&h=250&fit=crop&auto=format&q=92&s=52bd69d925c0b5870071920e3b533b3e" alt="">
-                    <div class="caption">
-                        <h3>The Bessard</h3>
-                        <p>We made "The Reward". We made "The First Hero". Now we're going for more episodes! Please help us bring the world of Alethrion to life!</p>                       
-                    </div>
+        <!-- Projects Row -->
+            <div class="col-md-4 col-sm-6 project-content" ng-repeat="project in projects">
+                <div class="project-image">
+                    <!-- <img ng-src="{{getProfileImage('user.jpeg')}}"></img> -->
+                    <img class="img-responsive" ng-src="https://ksr-ugc.imgix.net/projects/1805765/photo-original.jpg?v=1431009885&w=338&h=250&fit=crop&auto=format&q=92&s=c6f47b4efe167caf2ea4ed2f86da28b5"></img>
+                </div>
+                <div class="project-name">
+                    <h3 class="project-name"><a href="#/projects/{{project._id}}">{{project.name}}</a></h3>
+                    <span class="project-desc">{{project.description | limitTo: 300 }}{{project.description > 300 ? '...' : ''}}</span>
                 </div>
             </div>
-
-            <div class="col-md-4 col-sm-6">
-                <div class="thumbnail">
-                    <img src="https://ksr-ugc.imgix.net/projects/1805765/photo-original.jpg?v=1431009885&w=338&h=250&fit=crop&auto=format&q=92&s=c6f47b4efe167caf2ea4ed2f86da28b5" alt="">
-                    <div class="caption">
-                        <h3>The World's First Nine Dollar Computer</h3>
-                        <p>Built for work, play, and everything in between! \(•◡•)/</p>       
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4 col-sm-6 hero-feature">
-                <div class="thumbnail">
-                    <img src="https://ksr-ugc.imgix.net/projects/1824079/photo-original.jpg?v=1430283150&w=338&h=250&fit=crop&auto=format&q=92&s=1894480064c0c4d72a9b212fda9c5593" alt="">
-                    <div class="caption">
-                        <h3>Electronic Health Record Software</h3>
-                        <p>LowEHR is a electronic health records and medical practice management application that can run on Windows.</p>   
-                    </div>
-                </div>
-            </div>
-       
-
-        </div>
-        <!-- /.row -->
 
         <hr>
-
-        
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class="post-container table-responsive">
-        <table class="table table-hover">
-            <tr>
-                <th><a href="" ng-click="reverse=!reverse; order('upvotes', reverse)">Votes</a>
-                <th><a href="" ng-click="reverse=!reverse; order('title', reverse)">Title</a></th>
-                <th><a href="" ng-click="reverse=!reverse; order('comments.length',reverse)">Comments</a></th>
-                <th><a href="" ng-click="reverse=!reverse; order('comments.author',reverse)">Author</a></th>
-            </tr>
-            <tr ng-repeat="post in posts" ng-mouseover="deleteBtn = true" ng-mouseleave="deleteBtn = false">
-                <td>
-                    {{post.upvotes}}
-                    <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(post)"></span>
-                </td>
-                <td>
-                    <a ng-show="post.link" href="{{ post.link }}">
-                        {{post.title}}
-                    </a>
-                    <span ng-hide="post.link">
-                        {{post.title}}
-                    </span>
-                </td>
-                <td>
-                    <span>
-                        {{post.comments.length}}
-                        <a href="#/posts/{{post._id}}">Comment(s)</a>
-                    </span>
-                </td>
-                <td>
-                    <span ng-show="post.author">
-                        <a>{{post.author}}</a> |
-                    </span>
-                </td>
-                <td>
-                    <div class="delete-btn">
-                        <a href="" class="glyphicon glyphicon-remove" ng-show="deleteBtn" ng-click="removePost(post)"></a>
-                    </div>
-                </td>
-            </tr>
-        </table>
-    </div>
-    <div class="col-md-6">
-        <form class="new-post-form form-group" ng-submit="addPost()" ng-show="isLoggedIn()">
-            <input class="form-control" type="text" placeholder="Title" ng-model="title"></input><br>
-            <input class="form-control" type="text" placeholder="Link" ng-model="link"></input>
-            <button class="btn btn-default" type="submit">Post</button>
-        </form>
-    </div>
-    <div ng-hide="isLoggedIn()">
-        <h3>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can add a post.</h3>
-    </div>
-    
+    </div>    
 </div>

@@ -1,5 +1,5 @@
 <div class="my-profile-container">
-    <div class="row profile">
+    <form ng-submit="updateProfile()" class="row profile">
 		<div class="col-md-3">
 			<div class="profile-sidebar">
 				<!-- SIDEBAR USERPIC -->
@@ -20,6 +20,7 @@
 				
 				<div class="profile-userbuttons">
 					<button id="openModal" name="econnect_invite" class="btn btn-success btn-sm">Invite</button>
+					<button type="button" ng-show="currentUserId() === profile._id && isEditing === false" class="btn btn-default btn-sm" ng-click="isEditing = true;">Edit Profile</button>
 				</div>
 
 				<!-- END SIDEBAR BUTTONS -->
@@ -46,25 +47,38 @@
 			<!-- END MENU -->
 			</div>
 		</div>
-		<div class="col-md-9 tab">
+		<div class="my-profile-content col-md-9 tab">
             <div id="profile-tab" class="tab-content" ng-show="checkProfileTab(1)">
 			    <table class="table table-user-information">
 			   		<tbody>
 			   			<tr>
 			   				<td>About Me</td>
-                    		<td>{{profile.aboutMe}}</td>
+                    		<td>
+                    			<div class="profile-about-me" contenteditable="{{ isEditing }}"  ng-class="{'edit-mode' : isEditing}" ng-model="profile.aboutMe">
+                    				
+                    			</div>
+                			</td>
                     	</tr>
                     	<tr>
 			   				<td>Experience</td>
-                    		<td>{{profile.experience}}</td>
+                    		<td>
+                    			<div class="profile-experience" ng-attr-contenteditable="{{ isEditing }}"  ng-class="{'edit-mode' : isEditing}" ng-model="profile.experience">
+                    			</div>
+                			</td>
                     	</tr>
                     	<tr>
 			   				<td>Skills</td>
-                    		<td>{{profile.skills}}</td>
+                    		<td>
+                    			<div class="profile-skills editable" ng-attr-contenteditable="{{ isEditing }}"  ng-class="{'edit-mode' : isEditing}" ng-model="profile.skills">
+                    			</div>
+                    		</td>
                     	</tr>
                     	<tr>
 			   				<td>Interests</td>
-                    		<td>{{profile.interests}}</td>
+                    		<td>
+                    			<div class="profile-skills editable" ng-attr-contenteditable="{{ isEditing }}"  ng-class="{'edit-mode' : isEditing}" ng-model="profile.interests">
+                    			</div>
+                    		</td>
                     	</tr>
                     </tbody>
                 </table>
@@ -73,12 +87,17 @@
             	<div class="project-content" ng-repeat="project in profile.projects">
 			        <div class="project-image">
 			            <!-- <img ng-src="{{getProfileImage('user.jpeg')}}"></img> -->
-			            <img class="img-responsive" ng-src="https://ksr-ugc.imgix.net/projects/1805765/photo-original.jpg?v=1431009885&w=338&h=250&fit=crop&auto=format&q=92&s=c6f47b4efe167caf2ea4ed2f86da28b5"></img>
+			            <a href="#/projects/{{project._id}}">
+			            	<img class="img-responsive" ng-src="https://ksr-ugc.imgix.net/projects/1805765/photo-original.jpg?v=1431009885&w=338&h=250&fit=crop&auto=format&q=92&s=c6f47b4efe167caf2ea4ed2f86da28b5"></img>
+			            </a>
 			        </div>
 			        <div class="project-name">
-			            <h3 class="project-name"><a href="#/projects/{{project._id}}">{{project.name}}</a></h3>
-			            <span class="project-desc">{{project.description | limitTo: 300 }}{{project.description > 300 ? '...' : ''}}</span>
-			            {{project._id}}
+			            <h3 class="project-name"><div ng-attr-contenteditable="{{ isEditing }}"  ng-class="{'edit-mode' : isEditing}" ng-model="project.name">
+			            </div></h3>
+			            <div class="project-desc" ng-attr-contenteditable="{{ isEditing }}"  ng-class="{'edit-mode' : isEditing}" ng-model="project.description"></div>
+
+			            <!-- {{project.description | limitTo: 300 }}{{project.description > 300 ? '...' : ''}}</span>
+			            {{project._id}} -->
 			        </div>
 			    </div>
             </div>
@@ -87,11 +106,24 @@
                     <tbody>
                     	<tr>
 			   				<td>Email Address</td>
-                    		<td>{{profile.email}}</td>
+                    		<td>
+                    			<div ng-attr-contenteditable="{{ isEditing }}"  ng-class="{'edit-mode' : isEditing}" ng-model="profile.email">
+                    			</div>
+                    		</td>
                     	</tr>
                     </tbody>
                 </table>
             </div>
+            <div class="profile-edit-button pull-right">
+				<button ng-show="currentUserId() === profile._id && isEditing === true" class="btn btn-default" ng-click="cancelEditing()">
+					Cancel
+				</button>
+				
+				<button ng-show="currentUserId() === profile._id && isEditing === true" class="btn btn-primary" type="submit" >
+					Save
+				</button>
+			</div>
 		</div>
-	</div> 
+		
+	</form> 
 </div>

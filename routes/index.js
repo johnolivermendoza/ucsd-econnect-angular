@@ -144,6 +144,38 @@ router.get('/profiles/:profile', function(req, res, next) {
 	})	
 });
 
+router.post('/profiles/:profile/updateprofile', function(req, res, next) {
+	console.log('**** UPDATING THE CURRENT PROFILE: ');
+	console.log(req.body);
+	
+	User.findById(req.body._id, function (err, user) {
+		if (err) return handleError(err);
+
+
+		user.firstName = req.body.firstName;
+		user.lastName = req.body.lastName;
+		user.email = req.body.email;
+		user.job = req.body.job;
+		user.shortDescription = req.body.shortDescription;
+		user.aboutMe = req.body.aboutMe;
+		user.experience = req.body.experience;
+		user.skills = req.body.skills;
+		user.interests = req.body.interests;
+
+		user.save(function (err) {
+		if (err) return handleError(err);
+		res.send(user);
+		});
+	});
+});
+
+
+
+
+
+
+
+
 
 // Preloads an existing comment
 router.param('project', function(req, res, next, id) {
