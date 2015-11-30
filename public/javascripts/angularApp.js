@@ -70,6 +70,16 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 				}]
 			}
 		})
+		.state('viewproject', {
+			url: '/projects/{id}',
+			templateUrl: '/viewProject.html',
+			controller: 'ProjectViewCtrl',
+			resolve: {
+				project: ['$stateParams', 'projectService', function($stateParams, projectService) {
+					return projectService.get($stateParams.id);
+				}]
+			}
+		})
 
 		// Show a specific profile
 		.state('addproject', {

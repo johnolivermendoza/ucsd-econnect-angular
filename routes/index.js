@@ -201,8 +201,23 @@ router.get('/projects', function(req, res, next) {
 	});
 });
 
+// Route to get a specific profile
+router.get('/projects/:project', function(req, res, next) {
 
-// Gets all projects for that specific post
+	// Populate the project with users
+	req.project.populate('users', function(err, project) {
+		if (err) { return next(err); }
+
+		res.json(project);
+	})	
+});
+
+
+
+
+
+
+// Gets all projects for that specific user
 router.get('/profiles/:profile/projects', function(req, res, next) {
 	var query = Project.find({post: req.post.id});
 	query.exec(function(err, projects) {
@@ -230,10 +245,12 @@ router.post('/profiles/:profile/addproject', function(req, res, next) {
 
 	project.name = req.body.name;
 	project.description = req.body.description;
+	project.teamDescription = req.body.teasmDescription;
 	project.skills = req.body.skills;
 	project.creationDate = req.body.creationDate;
 	project.launchDate = req.body.launchDate;
 	project.createdBy = req.profile;
+	project.users.push(req.profile);
 
 	project.save(function(err, project) {
 		console.log('**** Saving the project: ' + err);

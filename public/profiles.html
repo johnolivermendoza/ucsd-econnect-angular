@@ -5,16 +5,15 @@
 
 
     <!-- Projects Row -->
-        <div class="col-md-3 profile-content" ng-repeat="profile in profiles">
-            <div class="profile-userpic">
-                <!-- <img ng-src="{{getProfileImage('user.jpeg')}}"></img> -->
-                <img class="img-responsive img-circle" ng-src="http://gurucul.com/wp-content/uploads/2015/01/default-user-icon-profile.png"></img>
-            </div>
-            <div class="profile-name">
-                <h3 class="profile-name"><a href="#/profiles/{{profile._id}}">{{profile.firstName}} {{profile.lastName}}</a></h3>
-                <span class="profile-desc">{{profile.shortDescription | limitTo: 100 }}{{profile.shortDescription > 100 ? '...' : ''}}</span>
-                {{profile._id}}
-            </div>
+    <div class="col-md-3 profile-content" ng-repeat="profile in profiles">
+        <div class="profile-userpic">
+            <!-- <img ng-src="{{getProfileImage('user.jpeg')}}"></img> -->
+            <img class="img-responsive img-circle" ng-src="http://gurucul.com/wp-content/uploads/2015/01/default-user-icon-profile.png"></img>
         </div>
-    </table>
+        <div class="profile-name">
+            <h3 class="profile-name"><a href="#/profiles/{{profile._id}}">{{profile.firstName}} {{profile.lastName}}</a></h3>
+            <span class="profile-desc">{{profile.shortDescription | limitTo: 100 }}{{profile.shortDescription > 100 ? '...' : ''}}</span>
+            {{profile._id}}
+        </div>
+    </div>
 </div>

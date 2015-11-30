@@ -9,15 +9,15 @@
 				<!-- SIDEBAR USER TITLE -->
 				<div class="profile-usertitle">
 					<div class="profile-usertitle-name">
-						{{ profile.firstName}} {{profile.lastName}}
+						{{profile.firstName}} {{profile.lastName}}
 					</div>
 					<div class="profile-usertitle-job">
 						{{profile.job}}
 					</div>
 				</div>
+
 					<!-- END SIDEBAR USER TITLE -->
 					<!-- SIDEBAR BUTTONS -->
-				
 				<div class="profile-userbuttons">
 					<button id="openModal" name="econnect_invite" class="btn btn-success btn-sm">Invite</button>
 					<button type="button" ng-show="currentUserId() === profile._id && isEditing === false" class="btn btn-default btn-sm" ng-click="isEditing = true;">Edit Profile</button>

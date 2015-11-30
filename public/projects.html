@@ -4,8 +4,21 @@
     </div>
 
 
+    <div class="sorting-container">
+        <fieldset class="pull-left project-filter-container sort-group">
+            <p><label for="user_name">Sort By: </label>
+            <select style="display: inline-block" class="form-control" ng-options="item as item.label for item in sortItems" 
+   ng-model="item" ng-change="updateSort()"></p>
+            </select>
+        </fieldset>
+
+        <div class="form-group pull-right project-search-container">
+            <input ng-model="queryProject" class="form-control" name="query" placeholder="Search Projects"><br/>
+        </div>
+    </div>
+    
     <!-- Projects Row -->
-    <div class="col-md-4 project-content" ng-repeat="project in projects">
+    <div class="col-md-4 project-content" ng-repeat="project in projects | filter: queryProject">
         <div class="project-image">
             <!-- <img ng-src="{{getProfileImage('user.jpeg')}}"></img> -->
             <img class="img-responsive" ng-src="https://ksr-ugc.imgix.net/projects/1805765/photo-original.jpg?v=1431009885&w=338&h=250&fit=crop&auto=format&q=92&s=c6f47b4efe167caf2ea4ed2f86da28b5"></img>

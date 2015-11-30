@@ -1,7 +1,7 @@
 /* Global */
 
 .main-container {
-	padding: 20px;
+	padding: 0 0px;
 }
 
 
@@ -233,7 +233,7 @@
 
 /* Add new project */
 .projects-container .project-content {
-  height: 300px;
+  padding: 20px;
 }
 
 .projects-container .project-image img {
@@ -259,6 +259,22 @@
 
 }
 
+
+.sorting-container {
+  height: 30px;
+  width: 100%;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.sorting-container .sort-group {
+  white-space: nowrap;
+}
+
+.project-search-container {
+  width: 300px;
+}
+
 .projects-container .project-text {
   margin-left: auto;
   margin-right: auto;
@@ -282,6 +298,40 @@
 
 
 
+/* Project View Page */
+
+#banner-image {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  height: 150px;
+}
+
+/* Border */
+.box-divider {
+  padding: 20px 0 10px 0;
+  background: #fff;
+}
+
+
+.textbox {
+  padding: 5px;
+}
+
+.member-info h4 {
+  text-align: center;
+}
+
+.calendar img {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+#join-team-btn {
+  text-align: center;
+  margin-top: 10px;
+}
 
 
 

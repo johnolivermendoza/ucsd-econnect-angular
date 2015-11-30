@@ -35,6 +35,13 @@
             <input type="file" name="image" ng-file-select="onUploadSelect($files)" ng-model="user.picture"/>
         </div>
 
+        <div class="button" ngf-select ng-model="file" name="file" ngf-pattern="'image/*'" 
+            accept="image/*" ngf-max-size="20MB" ngf-min-height="100" 
+            ngf-resize="{width: 100, height: 100}">Select</div>
+        <div class="preview">
+            <div>Preview Profile Picture</div>
+            <img ngf-thumbnail="file || '/thumb.jpg'">
+        </div>
 
         <div class="form-group">
             <label for="user_job">Current Job</label>
