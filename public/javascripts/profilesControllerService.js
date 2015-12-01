@@ -1,9 +1,31 @@
 
 
 
-app.controller('ProfileCtrl', ['$scope', 'profileService', 'authService', function($scope, profileService, authService) {
+app.controller('ProfileCtrl', ['$scope', 'profileService', 'authService', '$filter', function($scope, profileService, authService, $filter) {
 	$scope.profiles = profileService.profiles;
 	$scope.isLoggedIn = authService.isLoggedIn;
+
+	$scope.sortItems = [
+        {'predicate': 'firstName', 'label': 'First Name', 'reverse' : false},
+        {'predicate': 'lastName', 'label': 'Last Name', 'reverse' : false},
+        {'predicate': 'username', 'label': 'Username', 'reverse' : false},
+        {'predicate': 'shortDescription', 'label': 'Short Description', 'reverse' : false},
+        {'predicate': 'firstName', 'label': 'First Name (reversed)', 'reverse' : true},
+        {'predicate': 'lastName', 'label': 'Last Name (reversed)', 'reverse' : true},
+        {'predicate': 'username', 'label': 'Username (reversed)', 'reverse' : true},
+        {'predicate': 'shortDescription', 'label': 'Short Description (reversed)', 'reverse' : true}
+    ];
+
+	$scope.item = {'predicate': 'title', 'label': 'Title', 'reverse' : false};
+
+    var orderBy = $filter('orderBy');
+    $scope.updateSort = function(predicate) {
+		$scope.profiles = orderBy($scope.profiles, $scope.item.predicate, $scope.item.reverse);
+	};
+
+
+
+
 
 
 	$scope.getProfileImage = function(image){

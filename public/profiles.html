@@ -3,15 +3,30 @@
         <h1>Check out these Profiles</h1>
     </div>
 
+    <div class="sorting-container">
+        <fieldset class="pull-left filter-container sort-group">
+            <p><label for="profile_select">Sort By: </label>
+            <select name="profile_select" style="display: inline-block" class="form-control" ng-options="item as item.label for item in sortItems" 
+   ng-model="item" ng-change="updateSort()"></p>
+            </select>
+        </fieldset>
+
+        <div class="form-group pull-right search-container">
+            <input ng-model="queryProfile" class="form-control" name="query" placeholder="Search Profiles"><br/>
+        </div>
+    </div>
+
+
 
     <!-- Projects Row -->
-    <div class="col-md-3 profile-content" ng-repeat="profile in profiles">
+    <div class="col-md-3 profile-content" ng-repeat="profile in profiles | filter: queryProfile">
         <div class="profile-userpic">
             <!-- <img ng-src="{{getProfileImage('user.jpeg')}}"></img> -->
             <img class="img-responsive img-circle" ng-src="http://gurucul.com/wp-content/uploads/2015/01/default-user-icon-profile.png"></img>
         </div>
         <div class="profile-name">
             <h3 class="profile-name"><a href="#/profiles/{{profile._id}}">{{profile.firstName}} {{profile.lastName}}</a></h3>
+            <p>({{profile.username}})</p>
             <span class="profile-desc">{{profile.shortDescription | limitTo: 100 }}{{profile.shortDescription > 100 ? '...' : ''}}</span>
             {{profile._id}}
         </div>

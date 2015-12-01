@@ -5,14 +5,14 @@
 
 
     <div class="sorting-container">
-        <fieldset class="pull-left project-filter-container sort-group">
-            <p><label for="user_name">Sort By: </label>
-            <select style="display: inline-block" class="form-control" ng-options="item as item.label for item in sortItems" 
+        <fieldset class="pull-left filter-container sort-group">
+            <p><label for="project_select">Sort By: </label>
+            <select name="project_select" style="display: inline-block" class="form-control" ng-options="item as item.label for item in sortItems" 
    ng-model="item" ng-change="updateSort()"></p>
             </select>
         </fieldset>
 
-        <div class="form-group pull-right project-search-container">
+        <div class="form-group pull-right search-container">
             <input ng-model="queryProject" class="form-control" name="query" placeholder="Search Projects"><br/>
         </div>
     </div>

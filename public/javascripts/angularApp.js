@@ -1,4 +1,4 @@
-var app = angular.module('econnect', ['ui.router']);
+var app = angular.module('econnect', ['ui.router', 'ngFileUpload']);
 
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
@@ -118,6 +118,11 @@ app.controller('MainCtrl', ['$scope', 'projectService', '$filter', 'authService'
 	$scope.projects = projectService.projects;
 	$scope.isLoggedIn = authService.isLoggedIn;
 
+	$scope.random = function() {
+		return 0.5 - Math.random();
+	};  
+
+
 	$scope.addPost = function() {
 		if(!$scope.title || $scope.title === '') {
 		 return; 
@@ -227,7 +232,7 @@ app.factory('authService', ['$http', '$window', function($http, $window) {
 }]);
 
 
-app.controller('AuthCtrl', ['$scope', '$state', 'authService', function($scope, $state, authService) {
+app.controller('AuthCtrl', ['$scope', '$state', 'authService', 'Upload', function($scope, $state, authService, Upload) {
 	$scope.user = {};
 
 	$scope.register = function(){
@@ -246,4 +251,27 @@ app.controller('AuthCtrl', ['$scope', '$state', 'authService', function($scope, 
 		});
 	};
 
+	$scope.uploadPic = function(file) {
+		file.upload = Upload.upload({
+			url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
+			data: {file: file, username: $scope.username},
+		});
+	};
+
+
 }]);
+
+
+
+
+
+app.directive('footer', function () {
+    return {
+        restrict: 'A',
+        replace: true,
+        templateUrl: "/footer.html",
+        controller: ['$scope', '$filter', function ($scope, $filter) {
+            // Behavior goes here
+        }]
+    }
+});
