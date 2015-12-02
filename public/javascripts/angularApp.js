@@ -56,6 +56,9 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 				profile: ['$stateParams', 'profileService', function($stateParams, profileService) {
 					return profileService.get($stateParams.id);
 				}]
+				//profileImage: ['$stateParams', 'authService', function($stateParams, authService) {
+				//	return authService.getImage($stateParams.id);
+				//}]
 			}
 		})
 
@@ -228,6 +231,15 @@ app.factory('authService', ['$http', '$window', function($http, $window) {
 		$window.localStorage.removeItem('econnect-token');
 	};
 
+	authService.getImage = function(id){
+		return $http.get('/upload/' + id).then(function(res) {
+			console.log('*** PRINTING OUT getImage: ' + res.data);
+			return res;
+		});
+	};
+
+
+
 	return authService;
 }]);
 
@@ -235,7 +247,14 @@ app.factory('authService', ['$http', '$window', function($http, $window) {
 app.controller('AuthCtrl', ['$scope', '$state', 'authService', 'Upload', function($scope, $state, authService, Upload) {
 	$scope.user = {};
 
-	$scope.register = function(){
+	$scope.register = function() {
+		// Checks if the image file is valid and then uploads
+		//if (registerForm.file.$valid && $scope.user.picFile) {
+		//	console.log('**** Start the Upload ****');
+        //	$scope.upload($scope.user.picFile);
+  		//}
+
+
 		authService.register($scope.user).error(function(error){
 			$scope.error = error;
 		}).then(function(){
@@ -251,15 +270,62 @@ app.controller('AuthCtrl', ['$scope', '$state', 'authService', 'Upload', functio
 		});
 	};
 
-	$scope.uploadPic = function(file) {
-		file.upload = Upload.upload({
-			url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
-			data: {file: file, username: $scope.username},
-		});
+	// upload on file select or drop /*
+    $scope.upload = function (file) {
+    	$scope.user.fileName = $scope.user.picFile.name;
+    	console.log("**** Uploading the image");
+        Upload.upload({
+            url: '/upload/',
+            data: {file: file, 'username': $scope.username}
+        }).then(function (resp) {
+            console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+        }, function (resp) {
+            console.log('Error status: ' + resp.status);
+        }, function (evt) {
+            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+            console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+        });
+    };
+
+    $scope.uploadFile = function($file) {
+    Upload.upload({
+    	url: '/upload/image/',
+    	data: {file: $file}
+    })
+      .then(function (resp) {
+        console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+    }, function (resp) {
+      console.log('Error status: ' + resp.status);
+    }, function (evt) {
+      var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+      console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+    });
+   };
+
+}]);
+
+
+
+
+
+
+
+
+app.factory('uploadService', ['$http', '$window', function($http, $window) {
+	var uploadService = {};
+
+
+	uploadService.getCurrentImage = function(){
+		
 	};
 
 
+
+
+	return uploadService;
 }]);
+
+
 
 
 

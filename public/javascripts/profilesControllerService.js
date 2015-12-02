@@ -73,6 +73,13 @@ app.controller('MyProfileCtrl', ['$scope', 'profileService', 'profile', 'authSer
 
 	};
 
+	$scope.getUserImage = function(id) {
+		$scope.imageData = authService.getImage(id);
+
+		return authService.getImage(id);
+
+	};
+
 	
 	/*
 	$scope.openModal = function(){

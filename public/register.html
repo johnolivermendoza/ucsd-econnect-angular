@@ -8,7 +8,7 @@
         <span>{{ error.message }}</span>
     </div>
 
-    <form name="registerForm" ng-submit="register()" ng-app="fileUpload" >
+    <form name="registerForm" ng-submit="register(); upload(user.picFile);" ng-app="fileUpload" >
         <div class="left-register-form col-md-4">
             <div class="form-group">
                 <label for="user_name">Username</label>
@@ -30,7 +30,6 @@
                 <label for="user_email">Email address</label>
                 <input type="text" id="user_email"  class="form-control" placeholder="Email" ng-model="user.email"></input>
             </div>
-
             <div class="form-group">
                 <label for="user_picture">Profile Picture</label>
                 <input type="file" ngf-select ng-model="user.picFile" name="file"    
@@ -39,18 +38,6 @@
                 <i ng-show="registerForm.file.$error.maxSize">File too large 
                 {{picFile.size / 1000000|number:1}}MB: max 2M</i>
             </div>
-
-            <!--<span class="progress" ng-show="picFile.progress >= 0">
-                <div style="width:{{picFile.progress}}%" 
-                    ng-bind="picFile.progress + '%'"></div>
-            </span>
-            <span ng-show="picFile.result">Upload Successful</span>
-            <span class="err" ng-show="errorMsg">{{errorMsg}}</span>  
-
-            <button 
-                ng-click="uploadPic(user.picFile)">Submit</button>-->
-
-
             <div class="preview-picture">
                 <span>Preview:</span>
                 <img ng-show="registerForm.file.$valid" ngf-thumbnail="user.picFile || '/images/user.jpeg'" class="thumb"> 
@@ -88,11 +75,12 @@
                 <label for="user_interest">Interest</label>
                 <textarea rows="4" id="user_interest" type="text" class="form-control" ng-model="user.interest"></textarea>
             </div>
+            <button type="submit" class="btn btn-primary pull-right" ng-disabled="!registerForm.$valid">Register</button>
         </div>
 
 
 
 
-        <button type="submit" class="btn btn-primary pull-right" ng-disabled="!registerForm.$valid">Register</button>
+        
     </form>
 </div>
