@@ -1,4 +1,4 @@
-var app = angular.module('econnect', ['ui.router', 'ngFileUpload']);
+var app = angular.module('econnect', ['ui.router', 'ngFileUpload', 'ngAnimate', 'ui.bootstrap']);
 
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 

@@ -27,7 +27,7 @@ app.controller('ProjectCtrl', ['$scope', 'projectService', 'authService', '$filt
 }]);
 
 
-app.controller('ProjectViewCtrl', ['$scope', 'projectService', 'authService', 'project', '$window', function($scope, projectService, authService, project, $window) {
+app.controller('ProjectViewCtrl', ['$scope', 'projectService', 'authService', 'project', '$window', '$uibModal', '$log', function($scope, projectService, authService, project, $window, $uibModal, $log) {
 	$scope.isLoggedIn = authService.isLoggedIn;
 	$scope.project = project;
 
@@ -68,17 +68,51 @@ app.controller('ProjectViewCtrl', ['$scope', 'projectService', 'authService', 'p
 		return false;
 	};
 
+	$scope.open = function (size) {
+		var modalInstance = $uibModal.open({
+			animation: true,
+			//templateUrl: '/projectConfirm.html',
+			controller: 'ConfirmProjectModalCtrl',
+			size: size,
+			template: 
+				"'<div class='modal-body'>" +
+				    "Are you sure you want to join this project?" +
+				"</div>" +
+				"<div class='modal-footer'>" +
+				    "<button class='btn btn-primary' type='button' ng-click='ok()''>Yes</button>" +
+				    "<button class='btn btn-warning' type='button' ng-click='cancel()'>Cancel</button>" +
+				"</div>"
+
+		});
+		modalInstance.result.then(function (value) {
+			if (value) {
+				projectService.joinCurrentProject($scope.project._id);
+				$window.location.reload();
+			}
+			
+		}, function () {
+			console.log("**** Successfully joined the project");
+		});
+	};
 
 
 	
-
-
-
-
-
-
-
 }]);
+
+app.controller('ConfirmProjectModalCtrl', function ($scope, $uibModalInstance) {
+
+  $scope.ok = function () {
+    $uibModalInstance.close(true);
+  };
+
+  $scope.cancel = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+});
+
+
+
+
 
 
 
@@ -166,6 +200,13 @@ app.factory('projectService', ['$http', 'authService', function($http, authServi
 			console.log("**** Update the profile " + data);
 		});
 	};
+
+	projectService.joinCurrentProject = function(id, profile) {
+		return $http.post('/projects/' + id + '/joinproject/' + authService.currentUserId(), profile).success(function(data){
+			console.log("**** Update the profile " + data);
+		});
+	};
+
 
 	
 

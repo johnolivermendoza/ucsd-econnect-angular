@@ -36,8 +36,8 @@
 					<tr>
                       	<td>Team Members</td>
                       	<td>
-						    <div class="project-team-member" ng-repeat="profile in project.users">
-						        <div class="profile-userpic">
+						    <div class="project-team-member col-sm-4" ng-repeat="profile in project.users">
+						        <div class="">
 						            <img class="img-responsive img-circle" style="-webkit-user-select: none;" src="./upload/{{profile._id}}" >
 						        </div>
 						        <div class="profile-name">
@@ -67,7 +67,7 @@
 				<div class="box-divider textbox">
 					<!-- SIDEBAR BUTTONS -->
 					<div id="join-team-btn">
-						<button type="button" ng-show="!checkProject()" class="btn btn-success btn-lg">Join the Project</button>
+						<button type="button" ng-show="!checkProject()" class="btn btn-success btn-lg" ng-click="open('sm')">Join the Project</button>
 						<button type="button" ng-show="checkProject() && isEditing === false" class="btn btn-default btn-lg" ng-click="isEditing = true;">Edit Project</button>
 					</div>
 				<!-- END SIDEBAR BUTTONS -->
@@ -88,4 +88,5 @@
 			</div>
 		</div>
 	</form>
+
 </div>

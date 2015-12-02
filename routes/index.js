@@ -317,12 +317,26 @@ router.post('/projects/:project/updateproject', function(req, res, next) {
 	});
 });
 
+router.post('/projects/:project/joinproject/:profile', function(req, res, next) {
+	console.log('**** Joining current project: ');
 
 
+	Project.findById(req.body._id, function (err, project) {
+		if (err) return handleError(err);
 
+		req.project.users.push(req.profile);
 
+		req.project.save(function (err) {
+			if(err) { return next(err); }
 
+			req.profile.projects.push(req.project);
 
+			req.profile.save(function(err, profile) {
+				res.json(profile);
+			})
+		});
+	});
+});
 
 
 

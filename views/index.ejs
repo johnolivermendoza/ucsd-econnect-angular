@@ -10,6 +10,8 @@
         <script src="/scripts/angular/angular.min.js"></script>
         <script src="/scripts/ng-file-upload/dist/ng-file-upload-shim.min.js"></script> 
         <script src="/scripts/ng-file-upload/dist/ng-file-upload.min.js"></script>
+        <script src="/scripts/angular-ui-bootstrap/ui-bootstrap.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-animate.js"></script>
 
         <script src="/javascripts/angularApp.js"></script>
         <script src="/javascripts/authControllerService.js"></script>
@@ -17,12 +19,16 @@
         <script src="/javascripts/profilesControllerService.js"></script>
         <script src="/javascripts/projectsControllerService.js"></script>
 
-
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-animate.js"></script>
+        <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.14.3.js"></script>
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+ 
 
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
         <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
-        <link href="/stylesheets/styles.css" rel="stylesheet" type="text/css" />        
+        <link href="/stylesheets/styles.css" rel="stylesheet" type="text/css" /> 
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">       
     </head>
 
     <body ng-app="econnect" ng-controller="MainCtrl">
@@ -35,7 +41,7 @@
             </ul>
             <ul class="nav navbar-nav pull-right">
 
-                <li ng-show="isLoggedIn()"><a href="/#/profiles/{{ currentUserId() }}">Welcome, {{ currentUser() }}</a></li>
+                <li ng-show="isLoggedIn()"><a href="/#/profiles/{{ currentUserId() }}">Welcome {{ currentUser() }}</a></li>
                 
                 <li ng-show="isLoggedIn()"><a href="/" ng-click="logOut()">Log Out</a></li>
 
