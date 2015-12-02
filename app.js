@@ -10,7 +10,9 @@ var mongoose = require('mongoose');
 var Posts = require('./models/Posts');
 var Comments = require('./models/Comments');
 var Users = require('./models/Users');
-var Users = require('./models/Projects');
+var Projects = require('./models/Projects');
+var Invites = require('./models/Invites');
+
 
 // img path
 var imgPath = './public/images/';

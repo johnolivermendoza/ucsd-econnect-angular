@@ -13,7 +13,7 @@ var mongoose = require('mongoose');
 var Post = mongoose.model('Post');
 var Comment = mongoose.model('Comment');
 var Project = mongoose.model('Project');
-
+var Invite = mongoose.model('Invite');
 
 // User Auth
 var passport = require('passport');
@@ -29,6 +29,11 @@ var multiparty = require('connect-multiparty'),
     Grid = require('gridfs-stream');
 
 var gfs = Grid(mongoose.connection.db, mongoose.mongo);
+
+
+// Date Format
+var moment = require('moment');
+moment().format();
 
 
 var putFile = function(path, file, callback) {
@@ -218,6 +223,22 @@ router.param('profile', function(req, res, next, id) {
 	});
 });
 
+// Loads an existing profile
+router.param('profile2', function(req, res, next, id) {
+	console.log('**** Loading existing profile');
+	var query = User.findById(id);
+
+
+	query.exec(function (err, profile){
+		if (err) { return next(err); }
+		if (!profile) { return next(new Error('can\'t find user profile')); }
+
+		req.profile = profile;
+		return next();
+	});
+});
+
+
 // Route to get a specific profile
 router.get('/profiles/:profile', function(req, res, next) {
 
@@ -251,6 +272,26 @@ router.post('/profiles/:profile/updateprofile', function(req, res, next) {
 		if (err) return handleError(err);
 		res.send(user);
 		});
+	});
+});
+
+
+
+// Route to invite a user to a project
+router.post('/invite/:profile/:profile2/:project', function(req, res, next) {
+	console.log("**** INVITING A USER:");
+	console.log(req.params);
+
+	var invite = new Invite();
+	invite.userId = req.params.profile;
+	invite.inviterId = req.params.profile2;
+	invite.projectId = req.params.project;
+	invite.createDate = new Date;
+
+	invite.save(function(err, post){
+	if(err){ return next(err); }
+
+		res.json(post);
 	});
 });
 
@@ -421,18 +462,23 @@ router.get('/posts', function(req, res, next) {
 	});
 });
 
+
 // Route to create a new post
-router.post('/posts', auth, function(req, res, next) {
-  var post = new Post(req.body);
-  post.author = req.payload.username;
+router.post('/posts/:title/:desc', function(req, res, next) {
+	console.log("*** OUTPUTTING POST: ");
+	console.log(req.params);
 
-  post.save(function(err, post){
-    if(err){ return next(err); }
+	var post = new Post();
+	post.title = req.params.title;
+	post.date = moment(new Date);
+	post.description = req.params.desc;
 
-    res.json(post);
-  });
+	post.save(function(err, post){
+	if(err){ return next(err); }
+
+		res.json(post);
+	});
 });
-
 
 // Route to load an existing post
 router.param('post', function(req, res, next, id) {
@@ -460,14 +506,7 @@ router.get('/posts/:post', function(req, res, next) {
 		res.json(post);
 	})
 });
-// Route to upvote a specific post by one vote
-router.put('/posts/:post/upvote', auth, function(req, res, next) {
-	req.post.upvote(function(err, post) {
-		if (err) { return next(err); }
 
-		res.json(post);
-	});
-});
 
 router.delete('/posts/:post/remove', function(req, res, next) {
 	Post.remove({ _id: req.post.id }, function(err) {

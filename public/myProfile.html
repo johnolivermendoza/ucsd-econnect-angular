@@ -21,7 +21,7 @@
 					<!-- END SIDEBAR USER TITLE -->
 					<!-- SIDEBAR BUTTONS -->
 				<div class="profile-userbuttons">
-					<button id="openModal" name="econnect_invite" class="btn btn-success btn-sm">Invite</button>
+					<button type='button' ng-show="currentUserId() != profile._id" class="btn btn-success btn-lg" ng-click="open('lg')">Invite</button>
 					<button type="button" ng-show="currentUserId() === profile._id && isEditing === false" class="btn btn-default btn-sm" ng-click="isEditing = true;">Edit Profile</button>
 				</div>
 

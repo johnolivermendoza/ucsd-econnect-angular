@@ -38,10 +38,13 @@ app.controller('ProfileCtrl', ['$scope', 'profileService', 'authService', '$filt
 
 
 
-app.controller('MyProfileCtrl', ['$scope', 'profileService', 'profile', 'authService', '$window', function($scope, profileService, profile, authService, $window) {
+app.controller('MyProfileCtrl', ['$scope', 'profileService', 'profile', 'authService', '$window', '$uibModal', 'postService',  function($scope, profileService, profile, authService, $window, $uibModal, postService) {
 	$scope.profile = profile;
 	$scope.activeTab = 1;
 	$scope.currentUserId = authService.currentUserId;
+	$scope.userId = $scope.currentUserId();
+	$scope.currentUser = authService.currentUser;
+	$scope.currentUserObj = authService.getCurrentUserObj($scope.userId);
 	$scope.isEditing = false;
 
 	$scope.setProfileTab = function(number) {
@@ -81,45 +84,66 @@ app.controller('MyProfileCtrl', ['$scope', 'profileService', 'profile', 'authSer
 	};
 
 	
-	/*
-	$scope.openModal = function(){
-		$modal.open({
-			templateUrl: '/addProject.html',
-		resolve: {
-			newPath: function(){
-			return 'home'
+	$scope.open = function (size) {
+		var modalInstance = $uibModal.open({
+			animation: true,
+			//templateUrl: '/projectConfirm.html',
+			controller: 'InviteUserModalCtrl',
+			size: size,
+			resolve: {
+				profile: function () {
+					return $scope.profile;
+				},
+				currentUser: function() {
+					return $scope.currentUserObj;
+				}
 			},
-			oldPath: function(){
-				return 'home.modal'
-			}
-		},
-		controller: 'ProjectController'
+			template: 
+				"'<div class='modal-body form-group'>" +
+				    "<label>Select which project {{profile.firstName}} {{profile.lastName}} is invited to join:</label>" +
+				    "<select name='project_select' style='display: inline-block' class='form-control' ng-options='project as project.name for project in currentUser.projects' ng-model='project'>" +
+				    "</select>" +
+				"</div>" +
+				"<div class='modal-footer'>" +
+				    "<button class='btn btn-success' type='button' ng-disabled='!project' ng-click='ok()''>Invite</button>" +
+				    "<button class='btn btn-default' type='button' ng-click='cancel()'>Cancel</button>" +
+				"</div>"
+
 		});
-	}; */
+		modalInstance.result.then(function (project) {
+			if (project) {
+				profileService.inviteUser($scope.profile._id, $scope.currentUserId(), project._id);
+
+				// Create invite post
+				var newPost = {
+					title: "Invite Post",
+					description: $scope.currentUser() + " has invited " + $scope.profile.username + " to the '" + project.name + "'' project"
+				};
+				postService.createPost(newPost.title, newPost.description);
+
+				$window.location.reload();
+			}
+			
+		}, function () {
+			console.log("**** Successfully invited the user");
+		});
+	};
 
 }]);
 
+app.controller('InviteUserModalCtrl', function ($scope, $uibModalInstance, profile, currentUser, profileService) {
+	$scope.profile = profile;
+	$scope.currentUser = currentUser;
 
 
+  $scope.ok = function () {
+  	console.log("***** Choose")
+    $uibModalInstance.close($scope.project);
+  };
 
-app.directive("contenteditable", function() {
-	return {
-		require: "ngModel",
-		link: function(scope, element, attrs, ngModel) {
-
-			function read() {
-				ngModel.$setViewValue(element.html());
-			}
-
-			ngModel.$render = function() {
-				element.html(ngModel.$viewValue || "");
-			};
-
-			element.bind("blur keyup change", function() {
-				scope.$apply(read);
-			});
-		}
-	};
+  $scope.cancel = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
 });
 
 
@@ -150,15 +174,42 @@ app.factory('profileService', ['$http', 'authService', function($http, authServi
 		});
 	};
 
-	/*
-
-	profileService.getImage = function(image) {
-		console.log('**** GETTING IMAGE');
-		return $http.get('/profileimage/' + image).then(function(result){
-			return result;
+	profileService.inviteUser = function(userId, inviterId, projectId) {
+		return $http.post('/invite/' + userId + '/' + inviterId + '/' + projectId).success(function(data){
+			console.log("**** Successfully invited the user " + data);
 		});
 	};
-*/
+
+
 
 	return profileService;
 }]);
+
+
+
+
+
+
+
+// Profile Directives
+
+app.directive("contenteditable", function() {
+	return {
+		require: "ngModel",
+		link: function(scope, element, attrs, ngModel) {
+
+			function read() {
+				ngModel.$setViewValue(element.html());
+			}
+
+			ngModel.$render = function() {
+				element.html(ngModel.$viewValue || "");
+			};
+
+			element.bind("blur keyup change", function() {
+				scope.$apply(read);
+			});
+		}
+	};
+});
+

@@ -80,7 +80,7 @@ app.controller('ProjectViewCtrl', ['$scope', 'projectService', 'authService', 'p
 				"</div>" +
 				"<div class='modal-footer'>" +
 				    "<button class='btn btn-primary' type='button' ng-click='ok()''>Yes</button>" +
-				    "<button class='btn btn-warning' type='button' ng-click='cancel()'>Cancel</button>" +
+				    "<button class='btn btn-default' type='button' ng-click='cancel()'>Cancel</button>" +
 				"</div>"
 
 		});
@@ -93,10 +93,7 @@ app.controller('ProjectViewCtrl', ['$scope', 'projectService', 'authService', 'p
 		}, function () {
 			console.log("**** Successfully joined the project");
 		});
-	};
-
-
-	
+	};	
 }]);
 
 app.controller('ConfirmProjectModalCtrl', function ($scope, $uibModalInstance) {

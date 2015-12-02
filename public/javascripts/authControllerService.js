@@ -60,6 +60,12 @@ app.factory('authService', ['$http', '$window', function($http, $window) {
 		});
 	};
 
+	authService.getCurrentUserObj = function(id){
+		return $http.get('/profiles/' + id).then(function(res) {
+			return res.data;
+		});
+	};
+
 
 
 	return authService;

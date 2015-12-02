@@ -10,6 +10,9 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 			resolve: {
 				projectsPromise: ['projectService', function(projectService) {
 					return projectService.getAll();
+				}],
+				postsPromise: ['postService', function(postService) {
+					return postService.getAll();
 				}]
 			}
 		})
@@ -117,8 +120,9 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 
 
 
-app.controller('MainCtrl', ['$scope', 'projectService', '$filter', 'authService', function($scope, projectService, $filter, authService) {
+app.controller('MainCtrl', ['$scope', 'projectService', '$filter', 'authService', 'postService', '$window', function($scope, projectService, $filter, authService, postService, $window) {
 	$scope.projects = projectService.projects;
+	$scope.posts = postService.posts;
 	$scope.isLoggedIn = authService.isLoggedIn;
 
 	$scope.random = function() {
@@ -127,17 +131,18 @@ app.controller('MainCtrl', ['$scope', 'projectService', '$filter', 'authService'
 
 
 	$scope.addPost = function() {
-		if(!$scope.title || $scope.title === '') {
+		if(!$scope.postDesc || $scope.postDesc === '') {
 		 return; 
 		}
 
 		var newPost = {
-			title: $scope.title,
-			link: $scope.link,
+			title: "Custom Post",
+			date: new Date(),
+			description: $scope.postDesc
 		};
 		// Call the 'posts' Service and create a new post
-		posts.create(newPost).success(function(comment) {
-			$scope.posts.push({newPost});
+		postService.createPost(newPost.title, newPost.description).success(function() {
+			$window.location.reload();
 		});
 
 
@@ -160,6 +165,36 @@ app.controller('MainCtrl', ['$scope', 'projectService', '$filter', 'authService'
 	};
 	$scope.order('--upvotes', true);
 }]);
+
+
+
+app.factory('postService', ['$http', 'authService', function($http, authService) {
+	var postService = {
+		// initialize the posts as empty
+		posts: []
+	};
+	
+	postService.createPost = function(title, desc) {
+		return $http.post('/posts/' + title + '/' + desc).success(function(data){
+			postService.posts.push(data);
+		});
+	};
+
+	postService.getAll = function() {
+		return $http.get('/posts').success(function(data) {
+			angular.copy(data, postService.posts);
+		});
+	};
+
+
+
+	return postService;
+}]);
+
+
+
+
+
 
 
 
