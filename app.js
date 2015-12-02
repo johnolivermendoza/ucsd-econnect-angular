@@ -26,7 +26,7 @@ mongoose.connection.on('error', function (err) {
   console.log(err);
 });*/
 
-mongoose.connect('mongodb://localhost/econnect');
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/econnect');
 
 // ************* End Mongoose Stuff *******************
 
