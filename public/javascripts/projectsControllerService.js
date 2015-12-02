@@ -27,7 +27,7 @@ app.controller('ProjectCtrl', ['$scope', 'projectService', 'authService', '$filt
 }]);
 
 
-app.controller('ProjectViewCtrl', ['$scope', 'projectService', 'authService', 'project', function($scope, projectService, authService, project) {
+app.controller('ProjectViewCtrl', ['$scope', 'projectService', 'authService', 'project', '$window', function($scope, projectService, authService, project, $window) {
 	$scope.isLoggedIn = authService.isLoggedIn;
 	$scope.project = project;
 
@@ -48,7 +48,7 @@ app.controller('ProjectViewCtrl', ['$scope', 'projectService', 'authService', 'p
 
 	$scope.updateProject = function() {
 		console.log("Call Update Project");
-		projectService.updateProject($scope.profile._id, $scope.profile).error(function(error){
+		projectService.updateProject($scope.project._id, $scope.project).error(function(error){
 			$scope.error = error;
 		}).then(function() {
 			console.log("**** Updated");
@@ -56,6 +56,19 @@ app.controller('ProjectViewCtrl', ['$scope', 'projectService', 'authService', 'p
 		});
 
 	};
+
+	// Checks if the current logged in user is a member of the project
+	$scope.checkProject = function() {
+		var users = $scope.project.users;
+		for(var i = 0; i < users.length; i++) {
+		    if (users[i]._id == $scope.currentUserId()) {
+		        return true;
+		    }
+		}
+		return false;
+	};
+
+
 
 	
 
@@ -69,23 +82,40 @@ app.controller('ProjectViewCtrl', ['$scope', 'projectService', 'authService', 'p
 
 
 
-app.controller('AddProjectCtrl', ['$scope', 'projectService', 'profile', '$state', function($scope, projectService, profile, $state) {
+app.controller('AddProjectCtrl', ['$scope', 'projectService', 'profile', '$state', 'Upload', function($scope, projectService, profile, $state, Upload) {
 	$scope.profile = profile;
 	$scope.project = {};
 	//$scope.isLoggedIn = authService.isLoggedIn;
 
 
 
-console.log(profile);
-
 	$scope.addProject = function(){
+		console.log("**** PICNAME PROJECT: " + $scope.project.picName);
 		projectService.addProject($scope.profile._id, $scope.project).error(function(error){
 			$scope.error = error;
 		}).then(function(){
-			console.log("ADDED NEW PROJECT!");
+			console.log("ADDED NEW PROJECT!" + $scope.project);
 			$state.go('home');
 		});
 	};
+
+	// upload on file select or drop /*
+    $scope.upload = function (file) {
+    	$scope.project.picName = file.name;
+    	console.log("**** Uploading the image");
+        Upload.upload({
+            url: '/upload/',
+            data: {file: file, 'projectname': $scope.project.name}
+        }).then(function (resp) {
+            console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+        }, function (resp) {
+            console.log('Error status: ' + resp.status);
+        }, function (evt) {
+            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+            console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+        });
+    };
+
 
 	/*
 	$scope.addProject = function(){
@@ -130,6 +160,14 @@ app.factory('projectService', ['$http', 'authService', function($http, authServi
 			return data;
 		});
 	};
+
+	projectService.updateProject = function(id, profile) {
+		return $http.post('/projects/' + id + '/updateproject', profile).success(function(data){
+			console.log("**** Update the profile " + data);
+		});
+	};
+
+	
 
 	return projectService;
 }]);

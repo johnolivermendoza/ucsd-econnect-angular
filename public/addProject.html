@@ -7,36 +7,54 @@
 	<div ng-show="error" class="alert alert-danger row">
 		<span>{{ error.message }}</span>
 	</div>
-	<form ng-submit="addProject()" class="col-md-6">
+	<form ng-submit="upload(projectFile); addProject();" >
+		<div class="col-md-4"> 
 
-		<div class="form-group">
-	        <label for="project_name">Project Name</label>
-	        <input type="text" id="project_name" class="form-control" ng-model="project.name"></input>
-	    </div>
-	    <div class="form-group">
-	        <label for="project_desc">Project Description</label>
-	        <textarea rows="4" id="project_desc" type="text" class="form-control" ng-model="project.description"></textarea>
-	    </div>
-	    <div class="form-group">
-	        <label for="project_team_desc">Team Description</label>
-	        <textarea rows="4" id="project_team_desc" type="text" class="form-control" ng-model="project.teamDescription"></textarea>
-	    </div>
-	    <div class="form-group">
-	        <label for="project_project_skills">Project Skills</label>
-	        <textarea rows="4" id="project_skills" type="text" class="form-control" ng-model="project.skills"></textarea>
-	    </div>
-	    <div class="form-group">
-	        <label for="project_creation_date">Project Creation Date</label>
-	        <input type="date" id="project_creation_date" name="input" class="form-control" ng-model="project.creationDate"
-	       		placeholder="yyyy-MM-dd" required />
-	    </div>
-	    <div class="form-group">
-	        <label for="project_launch_date">Project Launch Date</label>
-	        <input type="date" id="project_launch_date" name="input" class="form-control" ng-model="project.launchDate"
-	       		placeholder="yyyy-MM-dd" required />
-	    </div>    
+			<div class="form-group">
+		        <label for="project_name">Project Name</label>
+		        <input type="text" id="project_name" class="form-control" ng-model="project.name"></input>
+		    </div>
+
+	        <div class="form-group">
+		        <label for="project_desc">Project Description</label>
+		        <textarea rows="4" id="project_desc" type="text" class="form-control" ng-model="project.description"></textarea>
+		    </div>
 
 
-		<button type="submit" class="btn btn-primary">Create Project</button>
+		    <div class="form-group">
+	            <label for="user_picture">Project Picture</label>
+	            <input type="file" ngf-select ng-model="projectFile" name="file"    
+	             accept="image/*" ngf-max-size="2MB" required>
+	            <!-- <i ng-show="registerForm.file.$error.required">*required</i><br>  -->	            
+	        </div>
+	        <div class="preview-picture">
+	            <img ng-show="registerForm.file.$valid" ngf-thumbnail="projectFile || '/images/placeholder.jpeg'" class="thumb"> 
+	            <button ng-click="projectFile = null" ng-show="projectFile">Remove</button>
+	        </div>
+	    </div>
+	    <div class="col-md-6">
+		    
+		    <div class="form-group">
+		        <label for="project_team_desc">Team Description</label>
+		        <textarea rows="4" id="project_team_desc" type="text" class="form-control" ng-model="project.teamDescription"></textarea>
+		    </div>
+		    <div class="form-group">
+		        <label for="project_project_skills">Project Skills</label>
+		        <textarea rows="4" id="project_skills" type="text" class="form-control" ng-model="project.skills"></textarea>
+		    </div>
+		    <div class="form-group">
+		        <label for="project_creation_date">Project Creation Date</label>
+		        <input type="date" id="project_creation_date" name="input" class="form-control" ng-model="project.creationDate"
+		       		placeholder="yyyy-MM-dd" required />
+		    </div>
+		    <div class="form-group">
+		        <label for="project_launch_date">Project Launch Date</label>
+		        <input type="date" id="project_launch_date" name="input" class="form-control" ng-model="project.launchDate"
+		       		placeholder="yyyy-MM-dd" required />
+		    </div>    
+
+
+			<button type="submit" class="btn btn-primary">Create Project</button>
+		</div>
 	</form>
 </div>

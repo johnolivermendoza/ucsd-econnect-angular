@@ -1,5 +1,5 @@
 <div class="home-page-container">
-    <header class="intro-header" style="margin-top: 10px; background-image: url('http://publications.ucsd.edu/image-library/images/campus/geisel.jpg')">
+    <header class="intro-header">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
@@ -31,9 +31,9 @@
 
         <!-- Projects Row -->
         <div class="row">
-            <div class="col-md-8" ng-repeat="project in projects |orderBy:random | limitTo:1"> 
+            <div class="col-md-7" ng-repeat="project in projects |orderBy:random | limitTo:1"> 
                 <a class="featured-project-image" href="#">
-                    <img class="img-responsive" ng-src="https://ksr-ugc.imgix.net/projects/1805765/photo-original.jpg?v=1431009885&w=338&h=250&fit=crop&auto=format&q=92&s=c6f47b4efe167caf2ea4ed2f86da28b5"></img>
+                    <img class="img-responsive" style="" style="-webkit-user-select: none" src="./upload/project/{{project._id}}" >
                 </a>
                  <h3 class="project-name"><a href="#/projects/{{project._id}}">{{ project.name }}</a></h3>
                     <span class="project-desc">{{ project.description }}</span>
@@ -41,7 +41,7 @@
 
 
             <!-- News Feed -->
-            <div class="col-md-4 ">
+            <div class="col-md-5 ">
                 <a href="#">
                     <img class="img-responsive" src="http://designvast.com/wp-content/uploads/feedek-jquery-rss-feed-plugin.png" alt="">
                 </a>
@@ -69,7 +69,7 @@
             <div class="col-md-4 col-sm-6 project-content" ng-repeat="project in projects | limitTo:3">
                 <div class="project-image">
                     <!-- <img ng-src="{{getProfileImage('user.jpeg')}}"></img> -->
-                    <img class="img-responsive" ng-src="https://ksr-ugc.imgix.net/projects/1805765/photo-original.jpg?v=1431009885&w=338&h=250&fit=crop&auto=format&q=92&s=c6f47b4efe167caf2ea4ed2f86da28b5"></img>
+                    <img class="img-responsive" style="" style="-webkit-user-select: none" src="./upload/project/{{project._id}}">
                 </div>
                 <div class="project-name">
                     <h3 class="project-name"><a href="#/projects/{{project._id}}">{{project.name}}</a></h3>

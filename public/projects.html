@@ -21,7 +21,7 @@
     <div class="col-md-4 project-content" ng-repeat="project in projects | filter: queryProject">
         <div class="project-image">
             <!-- <img ng-src="{{getProfileImage('user.jpeg')}}"></img> -->
-            <img class="img-responsive" ng-src="https://ksr-ugc.imgix.net/projects/1805765/photo-original.jpg?v=1431009885&w=338&h=250&fit=crop&auto=format&q=92&s=c6f47b4efe167caf2ea4ed2f86da28b5"></img>
+            <img class="img-responsive" style="" style="-webkit-user-select: none" src="./upload/project/{{project._id}}" >
         </div>
         <div class="project-name">
             <h3 class="project-name"><a href="#/projects/{{project._id}}">{{project.name}}</a></h3>

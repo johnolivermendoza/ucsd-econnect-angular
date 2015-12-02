@@ -10,7 +10,7 @@ var ProjectSchema = new mongoose.Schema({
 	creationDate: {type: Date, required: true},
 	launchDate: {type: Date, required: true},
 	users: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-	teamPicture: { data: Buffer, contentType: String }	
+	picName: String
 
 });
 

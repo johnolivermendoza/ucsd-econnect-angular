@@ -1,12 +1,17 @@
-
-
-
 <div class="project-view-container">
-	<div class="masthead container">
-	    <img class="img-responsive" ng-src="https://ksr-ugc.imgix.net/projects/1805765/photo-original.jpg?v=1431009885&w=338&h=250&fit=crop&auto=format&q=92&s=c6f47b4efe167caf2ea4ed2f86da28b5"></img>
-	</div>
+	<form ng-submit="updateProject()" class="row profile">
+		<div class="page-header">
+	        <h1>
+	        	<div class="project-team-description" ng-attr-contenteditable="{{ isEditing }}"  ng-class="{'edit-mode' : isEditing}" ng-model="project.name"></div>
+	        </h1>
+	    </div>
 
-		<div class="my-project-content col-md-9 tab">
+		<div class="my-project-content col-md-8">
+				
+
+			
+
+
 		    <table class="table table-user-information">
 		   		<tbody>
 		   			<tr>
@@ -29,26 +34,27 @@
 			<table class="table">
 				<tbody>
 					<tr>
-                      	<!-- Projects Row -->
-					    <div class="col-md-3 profile-content" ng-repeat="profile in project.users">
-					        <div class="profile-userpic">
-					            <!-- <img ng-src="{{getProfileImage('user.jpeg')}}"></img> -->
-					            <img class="img-responsive img-circle" ng-src="http://gurucul.com/wp-content/uploads/2015/01/default-user-icon-profile.png"></img>
-					        </div>
-					        <div class="profile-name">
-					            <h3 class="profile-name"><a href="#/profiles/{{profile._id}}">{{profile.firstName}} {{profile.lastName}}</a></h3>
-					        </div>
-					    </div>
+                      	<td>Team Members</td>
+                      	<td>
+						    <div class="project-team-member" ng-repeat="profile in project.users">
+						        <div class="profile-userpic">
+						            <img class="img-responsive img-circle" style="-webkit-user-select: none;" src="./upload/{{profile._id}}" >
+						        </div>
+						        <div class="profile-name">
+						            <h3 class="profile-name"><a href="#/profiles/{{profile._id}}">{{profile.firstName}} {{profile.lastName}}</a></h3>
+						        </div>
+						    </div>
+						</td>
    					</tr>
 				</tbody>
 			</table>  
 		</div>
 		
-		<div class="col-md-3">
+		<div class="col-md-4">
 			<div class="profile-sidebar">
 				<!-- SIDEBAR USERPIC -->
-				<div class="img-rounded calendar">
-					<img src="http://inspirationfeed.com/wp-content/uploads/2011/05/A-minimalist-calendar-widget.jpg" class="img-responsive" alt="">
+				<div class="project-picture">
+					<img class="img-responsive" style="width: 100%; -webkit-user-select: none" src="./upload/project/{{project._id}}" >
 				</div>
 				<!-- END SIDEBAR USERPIC -->
 				
@@ -61,13 +67,25 @@
 				<div class="box-divider textbox">
 					<!-- SIDEBAR BUTTONS -->
 					<div id="join-team-btn">
-						<button type="button" class="btn btn-success btn-lg">Join the Project</button>
+						<button type="button" ng-show="!checkProject()" class="btn btn-success btn-lg">Join the Project</button>
+						<button type="button" ng-show="checkProject() && isEditing === false" class="btn btn-default btn-lg" ng-click="isEditing = true;">Edit Project</button>
 					</div>
 				<!-- END SIDEBAR BUTTONS -->
 
 					<h4>Preferred Skills: </h4>
-					{{project.skills}}
-					</div>
+					<div class="profile-skills editable" ng-attr-contenteditable="{{ isEditing }}"  ng-class="{'edit-mode' : isEditing}" ng-model="project.skills">
+                    </div>
+			</div>
+
+			<div class="profile-edit-button pull-right">
+				<button ng-show="checkProject() && isEditing === true" class="btn btn-default" ng-click="cancelEditing()">
+					Cancel
+				</button>
+				
+				<button ng-show="checkProject() && isEditing === true" class="btn btn-primary" type="submit" >
+					Save
+				</button>
 			</div>
 		</div>
+	</form>
 </div>

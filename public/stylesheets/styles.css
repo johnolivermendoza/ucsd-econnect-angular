@@ -5,11 +5,18 @@
 }
 
 
+.navbar {
+  height: 50px;
+  margin-bottom: 0;
+}
 
 /* Home page */
 
-.home-page-container {
 
+
+.home-page-container .intro-header {
+  background-image: url('http://publications.ucsd.edu/image-library/images/campus/geisel.jpg');
+  height: 500px;
 }
 
 
@@ -243,6 +250,13 @@
 .profile-edit-button {
   padding: 0 40px;
 }
+.tab-content {
+  
+}
+
+.tab-content .active {
+  transition: .5s linear all;
+}
 
 
 
@@ -272,6 +286,8 @@
 
 .add-project-container form textarea {
 }
+
+
 
 
 /* Show all projects */
@@ -323,13 +339,31 @@
 
 
 /* Project View Page */
+.project-view-container {
+  padding: 50px;
+}
 
-#banner-image {
+.project-container {
+  width: 100%;
+  height: 100%;
+}
+
+.my-project-content {
+}
+
+
+.banner-image {
   margin-left: auto;
   margin-right: auto;
   width: 100%;
   height: 150px;
 }
+
+
+.team-member-container {
+  border: solid;
+}
+
 
 /* Border */
 .box-divider {
@@ -367,35 +401,10 @@
 
 .footer-container {
   width: 100%;
-  padding: 50px;
+  padding: 100px;
 }
 
 
 
 
 
-
-
-
-
-
-.delete-btn {
-	position: absolute;
-}
-
-.post-content {
-  padding: 2px;
-}
-.new-post-form {
-  margin-top: 20px;
-}
-.new-post-form input {
-  display: block;
-}
-.new-post-form button {
-  margin-top: 20px;
-}
-
-post-container {
-	width: 100%;
-}

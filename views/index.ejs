@@ -12,6 +12,7 @@
         <script src="/scripts/ng-file-upload/dist/ng-file-upload.min.js"></script>
 
         <script src="/javascripts/angularApp.js"></script>
+        <script src="/javascripts/authControllerService.js"></script>
         <script src="/javascripts/postsControllerService.js"></script>
         <script src="/javascripts/profilesControllerService.js"></script>
         <script src="/javascripts/projectsControllerService.js"></script>
@@ -27,13 +28,15 @@
     <body ng-app="econnect" ng-controller="MainCtrl">
         <nav class="navbar navbar-default" ng-controller="NavCtrl">
             <ul class="nav navbar-nav pull-left">
-                <li><a href="/#/home">Home</a></li>
-            </ul>
-            <ul class="nav navbar-nav pull-right">
-                <li ng-show="isLoggedIn()"><a href="/#/profiles/{{ currentUserId() }}">{{ currentUser() }}</a></li>
+                <li><a class="navbar-brand" href="/#/home">UCSD E-Connect</a></li>
                 <li><a href="/#/profiles">Profiles</a></li>
                 <li><a href="/#/projects">Projects</a></li>
-                <li ng-show="isLoggedIn()"><a href="/#/profiles/{{ currentUserId() }}/addproject">Create New Project</a></li>
+                <li ng-show="isLoggedIn()"><a href="/#/profiles/{{ currentUserId() }}/addproject">Start a New Project</a></li>
+            </ul>
+            <ul class="nav navbar-nav pull-right">
+
+                <li ng-show="isLoggedIn()"><a href="/#/profiles/{{ currentUserId() }}">Welcome, {{ currentUser() }}</a></li>
+                
                 <li ng-show="isLoggedIn()"><a href="/" ng-click="logOut()">Log Out</a></li>
 
 

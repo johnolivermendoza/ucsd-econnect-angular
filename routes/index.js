@@ -65,7 +65,8 @@ router.get('/upload/:profile', function(req, res) {
 	//console.log("**** Getting profiles image: " + req.profile.picName);
 
     var da = gfs.files.find({ filename: req.profile.picName }).toArray(function(err, items) {
-    	console.log(items[0]._id);
+    	if (err) {return;}
+    	//console.log(items[0]._id);
     	var readstream = gfs.createReadStream({
 	    	_id: items[0]._id
 	  	});
@@ -74,9 +75,33 @@ router.get('/upload/:profile', function(req, res) {
         res.set('Content-Type', mime);
         var read_stream = gfs.createReadStream({filename: req.profile.picName});
 		read_stream.pipe(res);
-		return res;
+		return res.data;
     });
 });
+
+
+
+
+
+router.get('/upload/project/:project', function(req, res, next) {
+	//console.log("**** Getting project image: " + req.project);
+
+
+    var da = gfs.files.find({ filename: req.project.picName }).toArray(function(err, items) {
+    	if (err) { return next(err); }
+    	//console.log(items[0]._id);
+    	var readstream = gfs.createReadStream({
+	    	_id: items[0]._id
+	  	});
+
+        var mime = 'image/jpeg';
+        res.set('Content-Type', mime);
+        var read_stream = gfs.createReadStream({filename: req.project.picName});
+		read_stream.pipe(res);
+		return res.data;
+    }); 
+});
+
 
 
 
@@ -103,7 +128,7 @@ router.post('/register', function(req, res, next){
 	user.experience = req.body.experience;
 	user.skills = req.body.skills;
 	user.interests = req.body.interests;
-	user.picName = req.body.fileName;
+	user.picName = req.body.picName;
 	
 
 	user.save(function (err){
@@ -273,6 +298,30 @@ router.get('/projects/:project', function(req, res, next) {
 });
 
 
+router.post('/projects/:project/updateproject', function(req, res, next) {
+	console.log('**** UPDATING THE CURRENT PROJECT: ');
+	console.log(req.body);
+	
+	Project.findById(req.body._id, function (err, project) {
+		if (err) return handleError(err);
+
+		project.name = req.body.name;
+		project.description = req.body.description;
+		project.teamDescription = req.body.teamDescription;
+		project.skills = req.body.skills;
+
+		project.save(function (err) {
+		if (err) return handleError(err);
+		res.send(project);
+		});
+	});
+});
+
+
+
+
+
+
 
 
 
@@ -305,12 +354,14 @@ router.post('/profiles/:profile/addproject', function(req, res, next) {
 
 	project.name = req.body.name;
 	project.description = req.body.description;
-	project.teamDescription = req.body.teasmDescription;
+	project.teamDescription = req.body.teamDescription;
 	project.skills = req.body.skills;
 	project.creationDate = req.body.creationDate;
 	project.launchDate = req.body.launchDate;
 	project.createdBy = req.profile;
 	project.users.push(req.profile);
+	project.picFile = req.body.picFile;
+	project.picName = req.body.picName;
 
 	project.save(function(err, project) {
 		console.log('**** Saving the project: ' + err);
