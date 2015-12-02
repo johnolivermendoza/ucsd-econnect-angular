@@ -38,7 +38,7 @@ app.controller('ProfileCtrl', ['$scope', 'profileService', 'authService', '$filt
 
 
 
-app.controller('MyProfileCtrl', ['$scope', 'profileService', 'profile', 'authService', '$window', '$uibModal', 'postService',  function($scope, profileService, profile, authService, $window, $uibModal, postService) {
+app.controller('MyProfileCtrl', ['$scope', 'profileService', 'profile', 'authService', '$window', '$uibModal', 'postService', function($scope, profileService, profile, authService, $window, $uibModal, postService) {
 	$scope.profile = profile;
 	$scope.activeTab = 1;
 	$scope.currentUserId = authService.currentUserId;
@@ -84,12 +84,11 @@ app.controller('MyProfileCtrl', ['$scope', 'profileService', 'profile', 'authSer
 	};
 
 	
-	$scope.open = function (size) {
+	$scope.inviteUserModal = function () {
 		var modalInstance = $uibModal.open({
 			animation: true,
-			//templateUrl: '/projectConfirm.html',
 			controller: 'InviteUserModalCtrl',
-			size: size,
+			size: 'lg',
 			resolve: {
 				profile: function () {
 					return $scope.profile;
@@ -129,6 +128,67 @@ app.controller('MyProfileCtrl', ['$scope', 'profileService', 'profile', 'authSer
 		});
 	};
 
+
+	$scope.showInvitesModal = function () {
+		var modalInstance = $uibModal.open({
+			animation: true,
+			controller: 'ShowInvitesModalCtrl',
+			size: 'lg',
+			resolve: {
+				invites: function () {
+					return $scope.invites;
+				},
+				currentUser: function() {
+					return $scope.currentUserObj;
+				}
+			},
+			template: 
+				"'<div class='modal-body form-group'>" +
+				    "<div class='modal-header'>" +
+						"<h3 class='modal-title'>My Invites</h3>" +
+					"</div>" +
+				    "<table class='modal-body table table-hover'>" +
+				    	"This modal will show all of the invites for this user and they will get to accept or deny them here." +
+                        "<tr ng-repeat='invite in invites'>" +
+                            "<td>" +
+                                //"<div class='invite-content form-group'>" +
+                                //    "<label class='invite-title'>{{invite.title}}</label>" +
+                                //    "<p>{{post.date}}</p>" +
+                                //    "<span class="invite-description">{{invite.description}}</span>" +
+                                //"</div>" +
+                                "<button class='btn btn-success' type='button' ng-disabled='!project' ng-click='acceptInvite()''>Accept</button>" +
+				    			"<button class='btn btn-default' type='button' ng-click='denyInvite()'>Deny</button>" +
+                            "</td>" +
+                        "</tr>" +
+                    "</table>" +
+				"</div>" +
+				"<div class='modal-footer'>" +
+				    "<button class='btn btn-default' type='button' ng-click='closeModal()'>Close</button>" +
+				"</div>"
+
+		});
+		modalInstance.result.then(function (project) {
+			if (project) {
+				//profileService.inviteUser($scope.profile._id, $scope.currentUserId(), project._id);
+
+				// Create invite post
+				//var newPost = {
+				//	title: "Invite Post",
+				//	description: $scope.currentUser() + " has invited " + $scope.profile.username + " to the '" + project.name + "'' project"
+				//};
+				//postService.createPost(newPost.title, newPost.description);
+
+				//$window.location.reload();
+			}
+			
+		}, function () {
+			//console.log("**** Successfully invited the user");
+		});
+	};
+
+
+
+
 }]);
 
 app.controller('InviteUserModalCtrl', function ($scope, $uibModalInstance, profile, currentUser, profileService) {
@@ -142,6 +202,27 @@ app.controller('InviteUserModalCtrl', function ($scope, $uibModalInstance, profi
   };
 
   $scope.cancel = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+});
+
+
+app.controller('ShowInvitesModalCtrl', function ($scope, $uibModalInstance, invites, currentUser, profileService) {
+	$scope.invites = invites;
+	$scope.currentUser = currentUser;
+
+
+  $scope.acceptInvite = function () {
+  	console.log("***** Accept")
+    //$uibModalInstance.close($scope.project);
+  };
+
+  $scope.denyInvite = function () {
+  	console.log("**** Deny")
+    $uibModalInstance.dismiss('cancel');
+  };
+
+  $scope.closeModal = function () {
     $uibModalInstance.dismiss('cancel');
   };
 });
@@ -174,16 +255,34 @@ app.factory('profileService', ['$http', 'authService', function($http, authServi
 		});
 	};
 
+
+
 	profileService.inviteUser = function(userId, inviterId, projectId) {
-		return $http.post('/invite/' + userId + '/' + inviterId + '/' + projectId).success(function(data){
+		return $http.post('/invites/' + userId + '/' + inviterId + '/' + projectId).success(function(data){
+			console.log("**** Successfully invited the user " + data);
+		});
+	};
+
+	profileService.getAlMyInvites = function(userId, inviterId, projectId) {
+		return $http.get('/invites/' + userId + '/').success(function(data){
 			console.log("**** Successfully invited the user " + data);
 		});
 	};
 
 
 
+
 	return profileService;
 }]);
+
+
+
+
+
+
+
+
+
 
 
 

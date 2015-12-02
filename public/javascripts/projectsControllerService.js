@@ -94,6 +94,7 @@ app.controller('ProjectViewCtrl', ['$scope', 'projectService', 'authService', 'p
 			console.log("**** Successfully joined the project");
 		});
 	};	
+	
 }]);
 
 app.controller('ConfirmProjectModalCtrl', function ($scope, $uibModalInstance) {
@@ -146,24 +147,7 @@ app.controller('AddProjectCtrl', ['$scope', 'projectService', 'profile', '$state
             console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
         });
     };
-
-
-	/*
-	$scope.addProject = function(){
-		if($scope.body === '') { return; }
-
-		prof.addProject(profile._id, {
-			body: $scope.body,
-			author: 'user',
-		}).success(function(comment) {
-			$scope.post.comments.push(comment);
-		});
-		$scope.body = '';
-	};*/
-
-
 	
-
 }]);
 
 app.factory('projectService', ['$http', 'authService', function($http, authService) {

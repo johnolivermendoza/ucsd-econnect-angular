@@ -21,8 +21,9 @@
 					<!-- END SIDEBAR USER TITLE -->
 					<!-- SIDEBAR BUTTONS -->
 				<div class="profile-userbuttons">
-					<button type='button' ng-show="currentUserId() != profile._id" class="btn btn-success btn-lg" ng-click="open('lg')">Invite</button>
+					<button type='button' ng-show="currentUserId() != profile._id" class="btn btn-success btn-lg" ng-click="inviteUserModal()">Invite</button>
 					<button type="button" ng-show="currentUserId() === profile._id && isEditing === false" class="btn btn-default btn-sm" ng-click="isEditing = true;">Edit Profile</button>
+					<button type="button" ng-show="currentUserId() === profile._id && isEditing === false" class="btn btn-default btn-sm" ng-click="showInvitesModal()">Show My Invites</button>
 				</div>
 
 				<!-- END SIDEBAR BUTTONS -->
@@ -86,7 +87,7 @@
                 </table>
             </div>
             <div id="projects-tab" class="tab-content" ng-show="checkProfileTab(2)">
-            	<div class="project-content col-md-6" ng-repeat="project in profile.projects">
+            	<div class="project-content col-md-6" ng-show="profile.projects.length > 0" ng-repeat="project in profile.projects">
 			        <div class="project-image">
 			            <!-- <img ng-src="{{getProfileImage('user.jpeg')}}"></img> -->
 			            <a href="#/projects/{{project._id}}">
@@ -102,6 +103,9 @@
 			            {{project._id}} -->
 			        </div>
 			    </div>
+			    <div class="project-text" ng-show="!profile.projects.length > 0">
+			    	<span>This user is not in any projects</span>
+				</div>
             </div>
             <div id="contact-tab" class="tab-content" ng-show="checkProfileTab(3)">
 			   <table class="table table-user-information">
@@ -117,7 +121,7 @@
                 </table>
             </div>
             <div class="profile-edit-button pull-right">
-				<button ng-show="currentUserId() === profile._id && isEditing === true" class="btn btn-default" ng-click="cancelEditing()">
+				<button type='button' ng-show="currentUserId() === profile._id && isEditing === true" class="btn btn-default" ng-click="cancelEditing()">
 					Cancel
 				</button>
 				

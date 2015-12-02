@@ -21,7 +21,9 @@
     <!-- Projects Row -->
     <div class="col-md-3 profile-content" ng-repeat="profile in profiles | filter: queryProfile">
         <div class="profile-userpic">
-            <img class="img-responsive img-circle" style="margin: 0 auto;" style="-webkit-user-select: none" src="./upload/{{profile._id}}" >
+            <a href="#/profiles/{{profile._id}}">
+                <img class="img-responsive img-circle" style="margin: 0 auto;" style="-webkit-user-select: none" src="./upload/{{profile._id}}" >
+            </a>
         </div>
         <div class="profile-name">
             <h3 class="profile-name"><a href="#/profiles/{{profile._id}}">{{profile.firstName}} {{profile.lastName}}</a></h3>

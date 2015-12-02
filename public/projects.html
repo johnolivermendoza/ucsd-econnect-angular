@@ -20,8 +20,9 @@
     <!-- Projects Row -->
     <div class="col-md-4 project-content" ng-repeat="project in projects | filter: queryProject">
         <div class="project-image">
-            <!-- <img ng-src="{{getProfileImage('user.jpeg')}}"></img> -->
-            <img class="img-responsive" style="" style="-webkit-user-select: none" src="./upload/project/{{project._id}}" >
+            <a href="#/projects/{{project._id}}">
+                <img class="img-responsive" style="" style="-webkit-user-select: none" src="./upload/project/{{project._id}}" >
+            </a>
         </div>
         <div class="project-name">
             <h3 class="project-name"><a href="#/projects/{{project._id}}">{{project.name}}</a></h3>

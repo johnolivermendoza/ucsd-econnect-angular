@@ -278,7 +278,7 @@ router.post('/profiles/:profile/updateprofile', function(req, res, next) {
 
 
 // Route to invite a user to a project
-router.post('/invite/:profile/:profile2/:project', function(req, res, next) {
+router.post('/invites/:profile/:profile2/:project', function(req, res, next) {
 	console.log("**** INVITING A USER:");
 	console.log(req.params);
 
@@ -286,12 +286,41 @@ router.post('/invite/:profile/:profile2/:project', function(req, res, next) {
 	invite.userId = req.params.profile;
 	invite.inviterId = req.params.profile2;
 	invite.projectId = req.params.project;
-	invite.createDate = new Date;
+	invite.createDate = moment(new Date);
 
 	invite.save(function(err, post){
 	if(err){ return next(err); }
 
 		res.json(post);
+	});
+});
+
+// Route to invite a user to a project
+router.post('/invites/:profile/:profile2/:project', function(req, res, next) {
+	console.log("**** INVITING A USER:");
+	console.log(req.params);
+
+	var invite = new Invite();
+	invite.userId = req.params.profile;
+	invite.inviterId = req.params.profile2;
+	invite.projectId = req.params.project;
+	invite.createDate = moment(new Date);
+
+	invite.save(function(err, post){
+	if(err){ return next(err); }
+
+		res.json(post);
+	});
+});
+
+
+// Gets all invites for that specific user
+router.get('/invites/:profile/myinvites', function(req, res, next) {
+	var query = Invite.find({userId: req.params.profile});
+	query.exec(function(err, invites) {
+		if(err){ return next(err); }
+
+		res.json(invites);
 	});
 });
 
