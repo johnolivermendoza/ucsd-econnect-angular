@@ -4,8 +4,8 @@
  * Module dependencies.
  */
 
-var app = require('../app');
-var debug = require('debug')('flapper-news:server');
+var app = require('../app.js');
+var debug = require('debug')('ucsd-econnect:server');
 var http = require('http');
 
 /**
