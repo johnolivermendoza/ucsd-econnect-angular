@@ -1,8 +1,8 @@
 var express = require('express');
 var path = require('path');
-var favicon = require('serve-favicon');
+//var favicon = require('serve-favicon');
 var logger = require('morgan');
-var cookieParser = require('cookie-parser');
+//var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 // ************* Start Mongoose Stuff *******************
@@ -14,8 +14,7 @@ var Projects = require('./models/Projects');
 var Invites = require('./models/Invites');
 
 
-// img path
-var imgPath = './public/images/';
+
 /*
 mongoose.connection.on('open', function (ref) {
   console.log('Connected to mongo server.');
@@ -68,6 +67,8 @@ app.use(passport.initialize());
 
 
 
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
@@ -98,11 +99,4 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
-// Live Reload Code
-livereload = require('livereload');
-server = livereload.createServer();
-server.watch(__dirname + "/public");
-
-module.exports = app;
 
