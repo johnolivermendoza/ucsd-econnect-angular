@@ -22,9 +22,61 @@ var jwt = require('express-jwt');
 var auth = jwt({secret: 'SECRET', userProperty: 'payload'});
 
 
+// Image Upload
+var multiparty = require('connect-multiparty'),
+	multipartyMiddleware = multiparty(),
+    fs = require('fs'),
+    Grid = require('gridfs-stream');
+
+var gfs = Grid(mongoose.connection.db, mongoose.mongo);
+
+
+var putFile = function(path, file, callback) {
+    var writestream = gfs.createWriteStream({
+        filename: file.name,
+        content_type: file.type,
+    });
+	writestream.on('close', function (file) {
+			console.log("The file has been stored to database.");
+			callback(null, file);
+		
+	});
+    fs.createReadStream(path).pipe(writestream);
+}
+//app.post('/profile', upload.single('avatar'), function (req, res, next) {
+  // req.file is the `avatar` file
+  // req.body will hold the text fields, if there were any
+//})
+
+
+router.post('/upload', multipartyMiddleware, function(req,res){
+	var file = req.files.file;
+    console.log(file._id);
+
+    putFile(file.path, file, function(req, res, err) {
+    	console.log("**** Finished Uploading Image to the database.");
+    });
+        
+});
 
 
 
+router.get('/upload/:profile', function(req, res) {
+	//console.log("**** Getting profiles image: " + req.profile.picName);
+
+    var da = gfs.files.find({ filename: req.profile.picName }).toArray(function(err, items) {
+    	console.log(items[0]._id);
+    	var readstream = gfs.createReadStream({
+	    	_id: items[0]._id
+	  	});
+
+        var mime = 'image/jpeg';
+        res.set('Content-Type', mime);
+        var read_stream = gfs.createReadStream({filename: req.profile.picName});
+		read_stream.pipe(res);
+		return res;
+    });
+});
 
 
 
@@ -51,6 +103,7 @@ router.post('/register', function(req, res, next){
 	user.experience = req.body.experience;
 	user.skills = req.body.skills;
 	user.interests = req.body.interests;
+	user.picName = req.body.fileName;
 	
 
 	user.save(function (err){
@@ -66,6 +119,13 @@ router.post('/register', function(req, res, next){
 		return res.json({token: user.generateJWT()})
 	});
 });
+
+
+
+
+
+
+
 
 router.post('/login', function(req, res, next){
 	if(!req.body.username || !req.body.password){

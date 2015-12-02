@@ -19,7 +19,8 @@ var UserSchema = new mongoose.Schema({
 	skills: String,
 	interests: String,
 	projects: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Project' }],
-	profilePicture: { data: Buffer, contentType: String }
+	picFile: { data: Buffer, contentType: String },
+	picName: String
 
 });
 

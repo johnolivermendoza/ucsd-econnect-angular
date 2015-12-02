@@ -2,8 +2,10 @@
     <form ng-submit="updateProfile()" class="row profile">
 		<div class="col-md-3">
 			<div class="profile-sidebar">
-				<!-- SIDEBAR USERPIC -->
-				<img class="img-responsive img-circle" style="margin: 0 auto;" ng-src="http://gurucul.com/wp-content/uploads/2015/01/default-user-icon-profile.png"></img>
+				<!-- SIDEBAR USERPIC <img class="img-responsive img-circle" style="margin: 0 auto;" ng-src=""></img>    -->
+				
+				<img class="img-responsive img-circle" style="margin: 0 auto;" style="-webkit-user-select: none" src="./upload/{{profile._id}}" >
+
 
 				<!-- END SIDEBAR USERPIC -->
 				<!-- SIDEBAR USER TITLE -->

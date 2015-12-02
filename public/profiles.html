@@ -21,8 +21,7 @@
     <!-- Projects Row -->
     <div class="col-md-3 profile-content" ng-repeat="profile in profiles | filter: queryProfile">
         <div class="profile-userpic">
-            <!-- <img ng-src="{{getProfileImage('user.jpeg')}}"></img> -->
-            <img class="img-responsive img-circle" ng-src="http://gurucul.com/wp-content/uploads/2015/01/default-user-icon-profile.png"></img>
+            <img class="img-responsive img-circle" style="margin: 0 auto;" style="-webkit-user-select: none" src="./upload/{{profile._id}}" >
         </div>
         <div class="profile-name">
             <h3 class="profile-name"><a href="#/profiles/{{profile._id}}">{{profile.firstName}} {{profile.lastName}}</a></h3>
